@@ -27,13 +27,11 @@ public class ListPresenter implements ListContract.Presenter {
         repo.fetchNearByPlaces(lat, lon).subscribe(new Consumer<ArrayList<NearbyPlacesObject>>() {
             @Override
             public void accept(ArrayList<NearbyPlacesObject> list) throws Exception {
-                Log.e("saify", "done::: " + list.size());
                 view.onSucess(list);
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.e("saify", "erro::: " + throwable);
                 view.onFailure();
             }
         });
