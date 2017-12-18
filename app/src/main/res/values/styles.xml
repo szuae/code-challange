@@ -36,10 +36,34 @@
 
     </style>
 
+    <style name="card_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">@dimen/span_20dp</item>
+        <item name="android:background">@color/cardBackground</item>
+        <item name="android:elevation">@dimen/span_3dp</item>
+
+    </style>
+
+
+    <style name="divider_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divider_color</item>
+        <item name="android:layout_marginStart">@dimen/span_30dp</item>
+        <item name="android:layout_marginTop">@dimen/span_10dp</item>
+        <item name="android:layout_marginEnd">@dimen/span_30dp</item>
+
+    </style>
+
+
     <style name="title_style">
         <item name="android:textSize">@dimen/text_size_20sp</item>
-        <item name="android:paddingStart">@dimen/span_10dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
+
+
+
 
     <style name="sub_title_style">
         <item name="android:textColor">@color/subtitle_text_color</item>

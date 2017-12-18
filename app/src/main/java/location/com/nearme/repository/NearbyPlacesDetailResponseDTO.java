@@ -25,7 +25,7 @@ public class NearbyPlacesDetailResponseDTO implements Serializable {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     static public class Result implements Serializable {
-      public String formatted_address;
+        public String formatted_address;
         public String international_phone_number;
         public String name;
         public String id;

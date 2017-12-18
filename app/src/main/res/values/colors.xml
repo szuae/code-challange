@@ -7,4 +7,6 @@
     <color name="cardBackgroundDark">#f1f2f2</color>
     <color name="cardBackground">#ffffff</color>
     <color name="subtitle_text_color">#FF8040</color>
+    <color name="open_text_color">#449744</color>
+    <color name="divider_color">#818c9e</color>
 </resources>

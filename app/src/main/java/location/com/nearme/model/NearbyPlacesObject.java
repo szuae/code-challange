@@ -3,88 +3,112 @@ package location.com.nearme.model;
 
 import java.io.Serializable;
 
-public class NearbyPlacesObject  implements Serializable{
+import location.com.nearme.repository.NearbyPlacesDetailResponseDTO;
+
+public class NearbyPlacesObject implements Serializable {
     String id;
-    String phone;
-    String twitterID;
+    String place_id;
+    String reference;
     String address;
-    String latitude;
-    String longitude;
-    String type;
-    String imageUrl;
+    String phone_number;
     String name;
-    String whatsapp;
-    String facebook;
+    String website;
+    String url;
+    double rating;
+    double lat;
+    double lng;
+    boolean open_now;
+    NearbyPlacesDetailResponseDTO.Result.Photos[] photos;
+    NearbyPlacesDetailResponseDTO.Result.Reviews[] reviews;
 
     private NearbyPlacesObject(Builder builder) {
         id = builder.id;
-        phone = builder.phone;
+        place_id = builder.place_id;
+        reference = builder.reference;
         address = builder.address;
-        latitude = builder.latitude;
-        longitude = builder.longitude;
-        type = builder.type;
-        imageUrl = builder.imageUrl;
+        phone_number = builder.phone_number;
         name = builder.name;
-        whatsapp = builder.whatsapp;
-        facebook = builder.facebook;
+        website = builder.website;
+        url = builder.url;
+        rating = builder.rating;
+        lat = builder.lat;
+        lng = builder.lng;
+        open_now = builder.open_now;
+        photos = builder.photos;
+        reviews = builder.reviews;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPlace_id() {
+        return place_id;
     }
 
-    public String getTwitterID() {
-        return twitterID;
+    public String getReference() {
+        return reference;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
+    public String getPhone_number() {
+        return phone_number;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getWhatsapp() {
-        return whatsapp;
+    public String getWebsite() {
+        return website;
     }
 
-    public String getFacebook() {
-        return facebook;
+    public String getUrl() {
+        return url;
     }
 
+    public double getRating() {
+        return rating;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public boolean isOpen_now() {
+        return open_now;
+    }
+
+    public NearbyPlacesDetailResponseDTO.Result.Photos[] getPhotos() {
+        return photos;
+    }
+
+    public NearbyPlacesDetailResponseDTO.Result.Reviews[] getReviews() {
+        return reviews;
+    }
 
     public static final class Builder {
         private String id;
-        private String phone;
+        private String place_id;
+        private String reference;
         private String address;
-        private String latitude;
-        private String longitude;
-        private String type;
-        private String imageUrl;
+        private String phone_number;
         private String name;
-        private String whatsapp;
-        private String facebook;
+        private String website;
+        private String url;
+        private double rating;
+        private double lat;
+        private double lng;
+        private boolean open_now;
+        private NearbyPlacesDetailResponseDTO.Result.Photos[] photos;
+        private NearbyPlacesDetailResponseDTO.Result.Reviews[] reviews;
 
         public Builder() {
         }
@@ -94,8 +118,13 @@ public class NearbyPlacesObject  implements Serializable{
             return this;
         }
 
-        public Builder phone(String val) {
-            phone = val;
+        public Builder place_id(String val) {
+            place_id = val;
+            return this;
+        }
+
+        public Builder reference(String val) {
+            reference = val;
             return this;
         }
 
@@ -104,23 +133,8 @@ public class NearbyPlacesObject  implements Serializable{
             return this;
         }
 
-        public Builder latitude(String val) {
-            latitude = val;
-            return this;
-        }
-
-        public Builder longitude(String val) {
-            longitude = val;
-            return this;
-        }
-
-        public Builder type(String val) {
-            type = val;
-            return this;
-        }
-
-        public Builder imageUrl(String val) {
-            imageUrl = val;
+        public Builder phone_number(String val) {
+            phone_number = val;
             return this;
         }
 
@@ -129,13 +143,43 @@ public class NearbyPlacesObject  implements Serializable{
             return this;
         }
 
-        public Builder whatsapp(String val) {
-            whatsapp = val;
+        public Builder website(String val) {
+            website = val;
             return this;
         }
 
-        public Builder facebook(String val) {
-            facebook = val;
+        public Builder url(String val) {
+            url = val;
+            return this;
+        }
+
+        public Builder rating(double val) {
+            rating = val;
+            return this;
+        }
+
+        public Builder lat(double val) {
+            lat = val;
+            return this;
+        }
+
+        public Builder lng(double val) {
+            lng = val;
+            return this;
+        }
+
+        public Builder open_now(boolean val) {
+            open_now = val;
+            return this;
+        }
+
+        public Builder photos(NearbyPlacesDetailResponseDTO.Result.Photos[] val) {
+            photos = val;
+            return this;
+        }
+
+        public Builder reviews(NearbyPlacesDetailResponseDTO.Result.Reviews[] val) {
+            reviews = val;
             return this;
         }
 

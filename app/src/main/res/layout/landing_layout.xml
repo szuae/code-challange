@@ -72,11 +72,7 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/span_20dp"
-            android:background="@color/cardBackground"
-            android:elevation="3dp"
+            style="@style/card_style"
             card_view:cardCornerRadius="@dimen/card_album_radius">
 
             <GridLayout
@@ -88,7 +84,9 @@
                 android:rowCount="3"
                 android:useDefaultMargins="true">
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/resturant_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -96,11 +94,13 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/resturant_title" />
+                        android:text="@string/resturant_label" />
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/atm_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -108,11 +108,13 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/atm_title" />
+                        android:text="@string/atm_label" />
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/gas_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -120,11 +122,13 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/gas_title" />
+                        android:text="@string/gas_label" />
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/cafe_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -132,11 +136,13 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/cafe_title" />
+                        android:text="@string/cafe_label" />
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/mall_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -144,11 +150,13 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/mall_title" />
+                        android:text="@string/mall_label" />
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/fitness_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -156,11 +164,13 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/fitness_title" />
+                        android:text="@string/fitness_label" />
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/pharmacy_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -168,11 +178,13 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/pharmacy_title" />
+                        android:text="@string/pharmacy_label" />
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/parking_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -180,11 +192,13 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/parking_title" />
+                        android:text="@string/parking_label" />
 
                 </LinearLayout>
 
-                <LinearLayout style="@style/grid_element_container_style">
+                <LinearLayout
+                    android:id="@+id/movies_layout"
+                    style="@style/grid_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
@@ -192,7 +206,7 @@
 
                     <TextView
                         style="@style/grid_element_title_style"
-                        android:text="@string/movie_title" />
+                        android:text="@string/movie_label" />
 
                 </LinearLayout>
 
