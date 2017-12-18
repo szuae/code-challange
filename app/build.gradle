@@ -39,6 +39,7 @@ android {
     compileSdkVersion COMPILE_SDK_VERSION
     buildToolsVersion = BUILD_TOOLS_VERSION
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "location.com.nearme"
         minSdkVersion 21
         targetSdkVersion 26
