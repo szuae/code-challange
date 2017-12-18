@@ -12,6 +12,30 @@
 
     </style>
 
+    <style name="grid_element_container_style" >
+        <item name="android:layout_width">@dimen/span_100dp</item>
+        <item name="android:layout_height">@dimen/span_100dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">fill_horizontal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="grid_element_image_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+
+    <style name="grid_element_title_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:top">@dimen/span_5dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size_16sp</item>
+
+    </style>
+
     <style name="title_style">
         <item name="android:textSize">@dimen/text_size_20sp</item>
         <item name="android:paddingStart">@dimen/span_10dp</item>

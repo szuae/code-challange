@@ -29,10 +29,10 @@ public class ExploreList extends BaseFragment implements ListContract.View {
     Toolbar androidToolbar;
     AppBarLayout appBarLayout;
     CollapsingToolbarLayout CollapsingToolbarLayout;
-    RecyclerView listView;
+//    RecyclerView listView;
     Adapter listAdapter;
     View view;
-    Button searchButton;
+
 
     @Inject
     ListContract.Presenter presenter;
@@ -51,7 +51,7 @@ public class ExploreList extends BaseFragment implements ListContract.View {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setRootView(container);
-        view = inflater.inflate(R.layout.list_layout, container, false);
+        view = inflater.inflate(R.layout.landing_layout, container, false);
         initView(view);
         return view;
     }
@@ -61,24 +61,24 @@ public class ExploreList extends BaseFragment implements ListContract.View {
         CollapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
         CollapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
         CollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
-        CollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
-        searchButton = view.findViewById(R.id.search_button);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String lat = "" + ((NearMe) getActivity()).getMyLocation().getLatitude();
-                String lon = "" + ((NearMe) getActivity()).getMyLocation().getLongitude();
-                Log.e("saify", "::::" + lat + "::::"+ lon);
-                presenter.fetchCoOrdinates(lat, lon);
-            }
-        });
-        listView = view.findViewById(R.id.listView);
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
-        listView.setLayoutManager(mLayoutManager);
-        if(listAdapter == null)
-            listAdapter = new Adapter(getContext(), this);
-        listView.setAdapter(listAdapter);
+//        CollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+//        searchButton = view.findViewById(R.id.search_button);
+//        searchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                String lat = "" + ((NearMe) getActivity()).getMyLocation().getLatitude();
+//                String lon = "" + ((NearMe) getActivity()).getMyLocation().getLongitude();
+//                Log.e("saify", "::::" + lat + "::::"+ lon);
+//                presenter.fetchCoOrdinates(lat, lon);
+//            }
+//        });
+//        listView = view.findViewById(R.id.listView);
+//        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
+//        listView.setLayoutManager(mLayoutManager);
+//        if(listAdapter == null)
+//            listAdapter = new Adapter(getContext(), this);
+//        listView.setAdapter(listAdapter);
     }
 
 

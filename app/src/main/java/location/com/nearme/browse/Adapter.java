@@ -52,10 +52,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.viewHolder> {
 
     @Override
     public void onBindViewHolder(viewHolder holder, final int position, List<Object> payloads) {
-        holder.view.setCardBackgroundColor(context.getResources().getColor(R.color.card_background_color));
+//        holder.view.setCardBackgroundColor(context.getResources().getColor(R.color.card_background_color));
         holder.title.setText(data.get(position).getName());
         holder.sub_title.setText(data.get(position).getType());
-        holder.icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.groceries));
+//        holder.icon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.groceries));
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

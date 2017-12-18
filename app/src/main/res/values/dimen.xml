@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="page_margin">16dp</dimen>
+    <dimen name="span_5dp">5dp</dimen>
     <dimen name="span_10dp">10dp</dimen>
     <dimen name="span_20dp">20dp</dimen>
     <dimen name="span_30dp">30dp</dimen>
+    <dimen name="span_100dp">100dp</dimen>
     <dimen name="span_40dp">40dp</dimen>
     <dimen name="text_size_20sp">20sp</dimen>
     <dimen name="text_size_16sp">16sp</dimen>

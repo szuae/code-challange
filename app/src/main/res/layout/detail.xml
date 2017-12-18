@@ -15,7 +15,7 @@
         android:layout_weight=".60"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/top_img" />
+         />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -63,28 +63,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/span_20dp"
-                android:src="@drawable/phone" />
+                 />
 
             <ImageView
                 android:id="@+id/facebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/span_20dp"
-                android:src="@drawable/facebook" />
+                />
 
             <ImageView
                 android:id="@+id/twitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/span_20dp"
-                android:src="@drawable/twitter" />
+                 />
 
             <ImageView
                 android:id="@+id/whatsapp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/span_30dp"
-                android:src="@drawable/whats" />
+                 />
 
         </LinearLayout>
     </RelativeLayout>

@@ -3,4 +3,16 @@
     <string name="sorry">Sorry! </string>
     <string name="no_funcationality">Functinality is not available yet</string>
     <string name="message"> is not available at the movement</string>
+    <string name="zipcode_hint">Enter Zipcode</string>
+    <string name="resturant_title">Resturant</string>
+    <string name="atm_title">ATM</string>
+    <string name="cafe_title">Cafe</string>
+    <string name="fitness_title">Fitness</string>
+    <string name="gas_title">Gas Station</string>
+    <string name="mall_title">Shopping</string>
+    <string name="parking_title">Parking</string>
+    <string name="movie_title">Movies</string>
+    <string name="pharmacy_title">Pharmacy</string>
+    <string name="search_type_title">select Search Type</string>
+
 </resources>
