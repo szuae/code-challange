@@ -1,7 +1,5 @@
 package location.com.nearme.repository;
 
-import android.provider.Contacts;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -34,16 +32,18 @@ public class NearbyPlacesResponseDTO implements Serializable {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     static public class Result implements Serializable {
-      public Coordinates geomerty;
-      public String id;
-      public String place_id;
-      public String reference;
-      public String name;
-      public String vicinity;
-      public double rating;
+        public Coordinates geomerty;
+        public WorkingHours opening_hours;
+        public String id;
+        public String place_id;
+        public String reference;
+        public String name;
+        public String vicinity;
+        public double rating;
 
         private Result(Builder builder) {
             geomerty = builder.geomerty;
+            opening_hours = builder.opening_hours;
             id = builder.id;
             place_id = builder.place_id;
             reference = builder.reference;
@@ -54,6 +54,10 @@ public class NearbyPlacesResponseDTO implements Serializable {
 
         public Coordinates getGeomerty() {
             return geomerty;
+        }
+
+        public WorkingHours getOpening_hours() {
+            return opening_hours;
         }
 
         public String getId() {
@@ -80,8 +84,79 @@ public class NearbyPlacesResponseDTO implements Serializable {
             return rating;
         }
 
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        static public class WorkingHours implements Serializable {
+            boolean open_now;
+
+            private WorkingHours(Builder builder) {
+                open_now = builder.open_now;
+            }
+
+            public boolean isOpen_now() {
+                return open_now;
+            }
+
+            public static final class Builder {
+                private boolean open_now;
+
+                public Builder() {
+                }
+
+                public Builder open_now(boolean val) {
+                    open_now = val;
+                    return this;
+                }
+
+                public WorkingHours build() {
+                    return new WorkingHours(this);
+                }
+            }
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        static public class Coordinates implements Serializable {
+            public Location location;
+
+            private Coordinates(Builder builder) {
+                location = builder.location;
+            }
+
+            public Location getLocation() {
+                return location;
+            }
+
+
+            @JsonIgnoreProperties(ignoreUnknown = true)
+            static public class Location implements Serializable {
+                public double lat;
+                public double lng;
+
+
+            }
+
+
+            public static final class Builder {
+                private Location location;
+
+                public Builder() {
+                }
+
+                public Builder location(Location val) {
+                    location = val;
+                    return this;
+                }
+
+                public Coordinates build() {
+                    return new Coordinates(this);
+                }
+            }
+        }
+
+
         public static final class Builder {
             private Coordinates geomerty;
+            private WorkingHours opening_hours;
             private String id;
             private String place_id;
             private String reference;
@@ -94,6 +169,11 @@ public class NearbyPlacesResponseDTO implements Serializable {
 
             public Builder geomerty(Coordinates val) {
                 geomerty = val;
+                return this;
+            }
+
+            public Builder opening_hours(WorkingHours val) {
+                opening_hours = val;
                 return this;
             }
 
@@ -133,78 +213,6 @@ public class NearbyPlacesResponseDTO implements Serializable {
         }
     }
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    static public class Coordinates implements Serializable {
-        public Location location;
-
-        private Coordinates(Builder builder) {
-            location = builder.location;
-        }
-
-        public Location getLocation() {
-            return location;
-        }
-
-
-        @JsonIgnoreProperties(ignoreUnknown = true)
-        static public class Location implements Serializable {
-            public double lat;
-            public double lng;
-
-            private Location(Builder builder) {
-                lat = builder.lat;
-                lng = builder.lng;
-            }
-
-            public double getLat() {
-                return lat;
-            }
-
-            public double getLng() {
-                return lng;
-            }
-
-            public static final class Builder {
-                private double lat;
-                private double lng;
-
-                public Builder() {
-                }
-
-                public Builder lat(double val) {
-                    lat = val;
-                    return this;
-                }
-
-                public Builder lng(double val) {
-                    lng = val;
-                    return this;
-                }
-
-                public Location build() {
-                    return new Location(this);
-                }
-            }
-        }
-
-        public static final class Builder {
-            private Location location;
-
-            public Builder() {
-            }
-
-            public Builder location(Location val) {
-                location = val;
-                return this;
-            }
-
-            public Coordinates build() {
-                return new Coordinates(this);
-            }
-        }
-    }
-
-
     public static final class Builder {
         private String next_page_token;
         private Result[] results;
@@ -232,4 +240,3 @@ public class NearbyPlacesResponseDTO implements Serializable {
             return new NearbyPlacesResponseDTO(this);
         }
     }
-}
