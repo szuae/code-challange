@@ -66,6 +66,7 @@ public class ExploreList extends BaseFragment implements ListContract.View {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String lat = "" + ((NearMe) getActivity()).getMyLocation().getLatitude();
                 String lon = "" + ((NearMe) getActivity()).getMyLocation().getLongitude();
                 Log.e("saify", "::::" + lat + "::::"+ lon);
@@ -96,6 +97,12 @@ public class ExploreList extends BaseFragment implements ListContract.View {
     public void onSucess(ArrayList<NearbyPlacesObject> list) {
         listAdapter.setData(list);
         listAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.setView(null);
     }
 
     @Override

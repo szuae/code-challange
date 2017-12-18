@@ -1,7 +1,5 @@
 package location.com.nearme.browse;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import io.reactivex.annotations.NonNull;
@@ -27,7 +25,8 @@ public class ListPresenter implements ListContract.Presenter {
         repo.fetchNearByPlaces(lat, lon).subscribe(new Consumer<ArrayList<NearbyPlacesObject>>() {
             @Override
             public void accept(ArrayList<NearbyPlacesObject> list) throws Exception {
-                view.onSucess(list);
+                if (view != null)
+                    view.onSucess(list);
             }
         }, new Consumer<Throwable>() {
             @Override
