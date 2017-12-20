@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,7 +10,6 @@
     <include
         android:id="@+id/toolbar_id"
         layout="@layout/toolbar_layout" />
-
 
 
     <LinearLayout
@@ -22,11 +21,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/span_20dp"
             android:layout_gravity="center_horizontal"
-            android:text="" />
+            android:layout_marginTop="@dimen/span_20dp"
+            android:textColor="@color/cardBackgroundDark"
+            android:text="@string/welcome_msg" />
 
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/span_30dp"
@@ -38,17 +38,16 @@
             android:paddingVertical="@dimen/span_5dp" />
 
 
-
     </LinearLayout>
 
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@color/cardBackgroundDark">
+        android:background="@color/cardBackgroundDark"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_view"
