@@ -19,8 +19,11 @@
     <string name="search_type_label">select Search Type</string>
     <string name="open_label">Open Now</string>
     <string name="close_label">Close Now</string>
+    <string name="menu_option_en">English</string>
+    <string name="menu_option_ar">عربى</string>
     <string name="phone_err_msg">Error Connecting to phone number! Please try later</string>
     <string name="web_err_msg">Error Connecting to website! Please try later </string>
     <string name="map_err_msg">Error Connecting to map! Please try later</string>
+    <string name="welcome_msg">Welcome! Find near by locations</string>
 
 </resources>

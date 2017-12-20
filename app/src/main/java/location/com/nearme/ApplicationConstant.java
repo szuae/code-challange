@@ -24,4 +24,19 @@ public interface ApplicationConstant {
             return id;
         }
     }
+
+
+    public static enum LANGUAGE {
+        English("en"),
+        Arabic("ar");
+        private final String id;
+
+        LANGUAGE(String id) {
+            this.id = id;
+        }
+
+        public String getValue() {
+            return id;
+        }
+    }
 }

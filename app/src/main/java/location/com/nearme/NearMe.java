@@ -86,6 +86,13 @@ public class NearMe extends AppCompatActivity implements GoogleApiClient.Connect
         this.loadFragment(ExploreList.newInstance(search_optionId), TransactionType.Replace, AnimationType.Fading);
     }
 
+    public void refreshFragmentOnLanguageChange(String fragmentTag) {
+        Fragment  fragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.detach(fragment);
+        fragmentTransaction.attach(fragment);
+        fragmentTransaction.commit();
+    }
     public void goToLandingScreen() {
         this.loadFragment(LandingScreen.newInstance(), TransactionType.Add, AnimationType.FromLeft);
     }

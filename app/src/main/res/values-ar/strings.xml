@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">بالقرب مني</string>
+
+    <string name="zipcode_hint">أدخل الرمز البريدي</string>
+    <string name="resturant_label">مطعم</string>
+    <string name="atm_label">ماكينة الصراف الآلي</string>
+    <string name="cafe_label">كافيه</string>
+    <string name="fitness_label">اللياقه البدنيه</string>
+    <string name="gas_label">محطة غاز</string>
+    <string name="mall_label">التسوق</string>
+    <string name="parking_label">موقف سيارات</string>
+    <string name="movie_label">أفلام</string>
+    <string name="pharmacy_label">مقابل</string>
+    <string name="call_label">مكالمة</string>
+    <string name="web_label">موقع الكتروني</string>
+    <string name="map_label">خريطة</string>
+    <string name="search_type_label">حدد نوع البحث</string>
+    <string name="open_label">مفتوح الان</string>
+    <string name="close_label">إغلاق الآن</string>
+    <string name="menu_option_en">English</string>
+    <string name="menu_option_ar">عربى</string>
+    <string name="phone_err_msg">حدث خطأ أثناء الاتصال برقم الهاتف! الرجاء المحاولة لاحقا</string>
+    <string name="web_err_msg">حدث خطأ أثناء الاتصال بموقع الويب! الرجاء المحاولة لاحقا </string>
+    <string name="map_err_msg">حدث خطأ أثناء الاتصال بالخريطة! الرجاء المحاولة لاحقا</string>
+    <string name="welcome_msg">أهلا بك! البحث بالقرب من المواقع</string>
+
+</resources>
