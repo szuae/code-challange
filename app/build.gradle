@@ -100,6 +100,8 @@ dependencies {
 
     annotationProcessor "com.google.dagger:dagger-android-processor:$DAGGER_VERSION"
     annotationProcessor "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTERKNIFE_VERSION"
+
     compile "com.google.dagger:dagger:$DAGGER_VERSION"
     compile "com.google.dagger:dagger-android:$DAGGER_VERSION"
     compile "org.apache.commons:commons-lang$APACHE_COMMON_LANG_VERSION"
@@ -110,6 +112,8 @@ dependencies {
     compile "com.google.android.gms:play-services-location:$PLAY_SERVICE_VERSION"
     compile "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     compile "com.android.support:design:$SUPPORT_VERSION"
+    compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
+    compile group: 'commons-validator', name: 'commons-validator', version: '1.4.0'
 
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
     testImplementation "junit:junit:$JUNIT_VERSION"

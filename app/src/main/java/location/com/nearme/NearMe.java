@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import location.com.nearme.browse.ExploreList;
 import location.com.nearme.detail.ExploreDetail;
+import location.com.nearme.landing.LandingScreen;
 import location.com.nearme.model.NearbyPlacesObject;
 import location.com.nearme.util.LocationHelper;
 
@@ -40,7 +41,7 @@ public class NearMe extends AppCompatActivity implements GoogleApiClient.Connect
         lastLocation = locationHelper.getLocation();
 
 
-        goToList();
+        goToLandingScreen();
     }
 
     public Location getMyLocation() {
@@ -81,11 +82,15 @@ public class NearMe extends AppCompatActivity implements GoogleApiClient.Connect
         locationHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void goToList() {
-        this.loadFragment(ExploreList.newInstance(), TransactionType.Add, AnimationType.FromLeft);
+    public void goToListScreen(String search_optionId) {
+        this.loadFragment(ExploreList.newInstance(search_optionId), TransactionType.Replace, AnimationType.Fading);
     }
 
-    public void goToDetail(NearbyPlacesObject obj) {
+    public void goToLandingScreen() {
+        this.loadFragment(LandingScreen.newInstance(), TransactionType.Add, AnimationType.FromLeft);
+    }
+
+    public void goToDetailScreen(NearbyPlacesObject obj) {
         this.loadFragment(ExploreDetail.newInstance(obj), TransactionType.Replace, AnimationType.Fading);
     }
 

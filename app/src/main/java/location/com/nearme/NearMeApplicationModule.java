@@ -11,6 +11,8 @@ import location.com.nearme.browse.ListContract;
 import location.com.nearme.browse.ListPresenter;
 import location.com.nearme.detail.DetailContract;
 import location.com.nearme.detail.DetailPresenter;
+import location.com.nearme.landing.LandingContract;
+import location.com.nearme.landing.LandingPresenter;
 import location.com.nearme.network.NetworkLayer;
 import location.com.nearme.repository.DataRepository;
 import location.com.nearme.repository.DataRepositoryImpl;
@@ -23,6 +25,18 @@ public class NearMeApplicationModule {
     @Singleton
     public ListContract.Presenter providePresenter(DataRepository repo) {
         return new ListPresenter(repo);
+    }
+
+    @Provides
+    @Singleton
+    public Applicationconfig provideApplicationConfig() {
+        return new Applicationconfig();
+    }
+
+    @Provides
+    @Singleton
+    public LandingContract.Presenter provideLandingScreenPresenter() {
+        return new LandingPresenter();
     }
 
 

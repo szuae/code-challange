@@ -70,7 +70,6 @@
                 android:layout_below="@id/divider1"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/span_10dp"
-                android:layout_toRightOf="@id/operating_hours"
                 android:text="@string/open_label"
                 android:textColor="@color/open_text_color"
                 android:textStyle="bold" />

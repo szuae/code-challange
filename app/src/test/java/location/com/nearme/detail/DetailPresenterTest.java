@@ -7,8 +7,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import location.com.nearme.IDInterface;
+import location.com.nearme.model.NearbyPlacesObject;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -27,134 +31,130 @@ public class DetailPresenterTest {
     @Test
     public void validPhoneNumberTest() {
         String number = "+971554598927";
-        assertTrue(presenter.validateNumber(number));
+        assertTrue(presenter.isPhoneNumberValid(number));
 
         number = "abcd";
-        assertFalse(presenter.validateNumber(number));
+        assertFalse(presenter.isPhoneNumberValid(number));
 
         number = "abcd23e34";
-        assertFalse(presenter.validateNumber(number));
+        assertFalse(presenter.isPhoneNumberValid(number));
 
         number = "00971554598927";
-        assertTrue(presenter.validateNumber(number));
+        assertTrue(presenter.isPhoneNumberValid(number));
 
         number = "00971554598927";
-        assertTrue(presenter.validateNumber(number));
+        assertTrue(presenter.isPhoneNumberValid(number));
     }
 
-    @Test
-    public void validEmailTest() {
-        String email = "saifuddin@gmail.com";
-        assertTrue(presenter.validateEmail(email));
-
-        email = "saifuddin123@gmail.com";
-        assertTrue(presenter.validateEmail(email));
-
-        email = "saifuddin";
-        assertFalse(presenter.validateEmail(email));
-
-        email = "saifuddin gmail.com";
-        assertFalse(presenter.validateEmail(email));
-
-        email = "saifuddin@gmail";
-        assertFalse(presenter.validateEmail(email));
-
-
-        email = "saifuddin.com";
-        assertFalse(presenter.validateEmail(email));
-
-
-        email = "23@gmail.com";
-        assertTrue(presenter.validateEmail(email));
-    }
 
     @Test
-    public void validatePhoneNumberTest() {
-        String number = "+971554598927";
-        presenter.validatePhoneNumber(number);
-        verify(view, Mockito.times(1)).actionOnvalidPhoneNumber(number);
-        verify(view, Mockito.times(0)).actionOnCurruptPhoneNumber(number);
+    public void validateUrlTest() {
+        String url = "http://www.google.com";
+        assertTrue(presenter.isUrlValid(url));
 
-        number = "";
-        presenter.validatePhoneNumber(number);
-        verify(view, Mockito.times(0)).actionOnvalidPhoneNumber(number);
-        verify(view, Mockito.times(1)).actionOnCurruptPhoneNumber(number);
+        url = "http://google.com";
+        assertTrue(presenter.isUrlValid(url));
 
-        number = null;
-        presenter.validatePhoneNumber(number);
-        verify(view, Mockito.times(0)).actionOnvalidPhoneNumber(number);
-        verify(view, Mockito.times(1)).actionOnCurruptPhoneNumber(number);
+        url = "https://www.google.com";
+        assertTrue(presenter.isUrlValid(url));
+
+        url = "https://www.google.com/";
+        assertTrue(presenter.isUrlValid(url));
+
+        url = "https://www.google.com/?value=abc";
+        assertTrue(presenter.isUrlValid(url));
+
+        url = "https://www.google.com?value=abc";
+        assertTrue(presenter.isUrlValid(url));
+
+        url = "https://www.google.com/?value=abc&value=123";
+        assertTrue(presenter.isUrlValid(url));
+
+        url = "";
+        assertFalse(presenter.isUrlValid(url));
+
+        url = null;
+        assertFalse(presenter.isUrlValid(url));
+
+        url = "https://www.google/?value=abc&value=123";
+        assertFalse(presenter.isUrlValid(url));
 
     }
 
     @Test
-    public void validateTwitterTest() {
-        String twitterId = "@saifuddin";
-        presenter.validateTwitterId(twitterId);
-        verify(view, Mockito.times(1)).actionOnvalidTwitterId(twitterId);
-        verify(view, Mockito.times(0)).actionOnCurruptTwitterId(twitterId);
+    public void invokeContactOptionPositiveTest() {
+        //positive scenario
+        NearbyPlacesObject object = new NearbyPlacesObject.Builder()
+                .phone_number("+971554598927")
+                .url("http://www.google.com?value=123")
+                .website("http://www.google.com")
+                .build();
+
+        presenter.setData(object);
+
+        presenter.invokeContactOption(IDInterface.DetailPageIds.callId);
+        verify(view, Mockito.times(1)).actionIfValidPhoneNumber(object.getPhone_number());
+        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
+        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
+        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
+        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
+        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
+
+        Mockito.reset(view);
+        presenter.invokeContactOption(IDInterface.DetailPageIds.mapId);
+        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
+        verify(view, Mockito.times(1)).actionIfValidMapUrl(object.getUrl());
+        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
+        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
+        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
+        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
 
 
-        twitterId = "@123";
-        presenter.validateTwitterId(twitterId);
-        verify(view, Mockito.times(1)).actionOnvalidTwitterId(twitterId);
-        verify(view, Mockito.times(0)).actionOnCurruptTwitterId(twitterId);
-
-
-        twitterId = "saifuddin";
-        presenter.validateTwitterId(twitterId);
-        verify(view, Mockito.times(0)).actionOnvalidTwitterId(twitterId);
-        verify(view, Mockito.times(1)).actionOnCurruptTwitterId(twitterId);
-
-        twitterId = "123";
-        presenter.validateTwitterId(twitterId);
-        verify(view, Mockito.times(0)).actionOnvalidTwitterId(twitterId);
-        verify(view, Mockito.times(1)).actionOnCurruptTwitterId(twitterId);
+        Mockito.reset(view);
+        presenter.invokeContactOption(IDInterface.DetailPageIds.webId);
+        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
+        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
+        verify(view, Mockito.times(1)).actionIfValidWebAddress(object.getWebsite());
+        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
+        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
+        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
     }
 
     @Test
-    public void validateFacebookId() {
-        String email = "saifuddin@gmail.com";
-        presenter.validatefacebookId(email);
-        verify(view, Mockito.times(1)).actionOnvalidFacebookId(email);
-        verify(view, Mockito.times(0)).actionOnCurruptFacebookId(email);
+    public void invokeContactOptionNegativeTest() {
+        //Negative scenario
+        NearbyPlacesObject object = new NearbyPlacesObject.Builder()
+                .phone_number("abc")
+                .url("abc")
+                .website("abc")
+                .build();
 
-        email = "";
-        presenter.validatefacebookId(email);
-        verify(view, Mockito.times(0)).actionOnvalidFacebookId(email);
-        verify(view, Mockito.times(1)).actionOnCurruptFacebookId(email);
+        presenter.setData(object);
 
-        email = null;
-        presenter.validatefacebookId(email);
-        verify(view, Mockito.times(0)).actionOnvalidFacebookId(email);
-        verify(view, Mockito.times(1)).actionOnCurruptFacebookId(email);
+        presenter.invokeContactOption(IDInterface.DetailPageIds.callId);
+        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
+        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
+        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
+        verify(view, Mockito.times(1)).showErrorOnInvalidPhoneNumber();
+        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
+        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
 
-        email = "saifuddin";
-        presenter.validatefacebookId(email);
-        verify(view, Mockito.times(0)).actionOnvalidFacebookId(email);
-        verify(view, Mockito.times(1)).actionOnCurruptFacebookId(email);
-    }
+        Mockito.reset(view);
+        presenter.invokeContactOption(IDInterface.DetailPageIds.mapId);
+        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
+        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
+        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
+        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
+        verify(view, Mockito.times(1)).showErrorOnInvalidMapUrl();
+        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
 
-    @Test
-    public void validateWhatsappId() {
-        String number = "+971554598927";
-        presenter.validateWhatsAppId(number);
-        verify(view, Mockito.times(1)).actionOnvalidWhatsAppId(number);
-        verify(view, Mockito.times(0)).actionOnCurruptWhatsAppId(number);
-
-        number = "";
-        presenter.validateWhatsAppId(number);
-        verify(view, Mockito.times(0)).actionOnvalidWhatsAppId(number);
-        verify(view, Mockito.times(1)).actionOnCurruptWhatsAppId(number);
-
-        number = null;
-        presenter.validateWhatsAppId(number);
-        verify(view, Mockito.times(0)).actionOnvalidWhatsAppId(number);
-        verify(view, Mockito.times(1)).actionOnCurruptWhatsAppId(number);
-
-        number = "abcd";
-        presenter.validateWhatsAppId(number);
-        verify(view, Mockito.times(0)).actionOnvalidWhatsAppId(number);
-        verify(view, Mockito.times(1)).actionOnCurruptWhatsAppId(number);
+        Mockito.reset(view);
+        presenter.invokeContactOption(IDInterface.DetailPageIds.webId);
+        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
+        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
+        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
+        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
+        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
+        verify(view, Mockito.times(1)).showErrorOnInvalidWebAddress();
     }
 }
