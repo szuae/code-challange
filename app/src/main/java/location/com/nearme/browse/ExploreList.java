@@ -3,21 +3,23 @@ package location.com.nearme.browse;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import location.com.nearme.ApplicationConstant;
 import location.com.nearme.BaseFragment;
 import location.com.nearme.NearMe;
 import location.com.nearme.NearMeApplication;
@@ -26,42 +28,89 @@ import location.com.nearme.model.NearbyPlacesObject;
 
 public class ExploreList extends BaseFragment implements ListContract.View {
 
-    Toolbar androidToolbar;
-    AppBarLayout appBarLayout;
+    private final static String SEARCH_OPTION_KEY = "search_option_key";
+
+    @BindView(R.id.list_collapsingToolbarLayout)
     CollapsingToolbarLayout CollapsingToolbarLayout;
-//    RecyclerView listView;
-    Adapter listAdapter;
+
+    @BindView(R.id.list_listView)
+    RecyclerView listView;
+
+    @BindView(R.id.list_parallax_header_imageview)
+    ImageView headerImage;
+
+    ListAdapter listAdapter;
     View view;
 
 
     @Inject
     ListContract.Presenter presenter;
 
-    public static ExploreList newInstance() {
-        return new ExploreList();
+    ApplicationConstant.SEARCH_OPTIONS searchType;
+
+    public static ExploreList newInstance(ApplicationConstant.SEARCH_OPTIONS search_options) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(SEARCH_OPTION_KEY, search_options);
+        ExploreList landingScreen = new ExploreList();
+        landingScreen.setArguments(bundle);
+        return landingScreen;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((NearMeApplication) getActivity().getApplication()).getComponent().inject(this);
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setRootView(container);
-        view = inflater.inflate(R.layout.landing_layout, container, false);
-        initView(view);
+        view = inflater.inflate(R.layout.list_layout, container, false);
+        searchType = (ApplicationConstant.SEARCH_OPTIONS) getArguments().getSerializable(SEARCH_OPTION_KEY);
+        unbinder = ButterKnife.bind(this, view);
+        presenter.setView(this);
+        initView();
         return view;
     }
 
-    private void initView(View view) {
-        presenter.setView(this);
-        CollapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
-        CollapsingToolbarLayout.setTitle(getResources().getString(R.string.app_name));
-        CollapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.transparent));
-//        CollapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
+    private void setHeaderImage() {
+        switch (searchType) {
+            case ATM:
+                headerImage.setImageResource(R.drawable.atm_img);
+                break;
+            case GASOLINE:
+                headerImage.setImageResource(R.drawable.gas_img);
+                break;
+            case FITNESS:
+                headerImage.setImageResource(R.drawable.fitness_img);
+                break;
+            case CAFE:
+                headerImage.setImageResource(R.drawable.cafe_img);
+                break;
+            case MOVIES:
+                headerImage.setImageResource(R.drawable.movies_img);
+                break;
+            case PARKING:
+                headerImage.setImageResource(R.drawable.parking_img);
+                break;
+            case PHARMACY:
+                headerImage.setImageResource(R.drawable.pharmacy_img);
+                break;
+            case RESTURANT:
+                headerImage.setImageResource(R.drawable.resturant);
+                break;
+            case SHOPPING:
+                headerImage.setImageResource(R.drawable.shopping_img);
+                break;
+        }
+    }
+
+    private void initView() {
+        CollapsingToolbarLayout.setTitle(StringUtils.capitalize(searchType.name().toLowerCase()));
+        setHeaderImage();
 //        searchButton = view.findViewById(R.id.search_button);
 //        searchButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -73,11 +122,10 @@ public class ExploreList extends BaseFragment implements ListContract.View {
 //                presenter.fetchCoOrdinates(lat, lon);
 //            }
 //        });
-//        listView = view.findViewById(R.id.listView);
 //        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
 //        listView.setLayoutManager(mLayoutManager);
 //        if(listAdapter == null)
-//            listAdapter = new Adapter(getContext(), this);
+//            listAdapter = new ListAdapter(getContext(), this);
 //        listView.setAdapter(listAdapter);
     }
 
@@ -107,11 +155,11 @@ public class ExploreList extends BaseFragment implements ListContract.View {
 
     @Override
     public void onFailure() {
-
+        Toast.makeText(getContext(), getResources().getString(R.string.connection_issue_msg), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onItemClicked(NearbyPlacesObject object) {
-        ((NearMe)getActivity()).goToDetail(object);
+        ((NearMe) getActivity()).goToDetailScreen(object);
     }
 }

@@ -9,6 +9,9 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import location.com.nearme.utilitycomponent.ConnectivityUtil;
 import location.com.nearme.utilitycomponent.ConnectivityUtilImpl;
 
@@ -19,6 +22,7 @@ public class BaseFragment extends Fragment {
     private ConnectivityUtil connectivityUtil;
     private ProgressBar progressBar;
     public ViewGroup rootView;
+    public Unbinder unbinder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,5 +56,12 @@ public class BaseFragment extends Fragment {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             progressBar.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if(unbinder != null)
+            unbinder.unbind();
     }
 }

@@ -25,5 +25,7 @@
     <string name="web_err_msg">Error Connecting to website! Please try later </string>
     <string name="map_err_msg">Error Connecting to map! Please try later</string>
     <string name="welcome_msg">Welcome! Find near by locations</string>
+    <string name="connection_issue_msg">Connection issue! please try after some time.</string>
+    <string name="review_label">Review and Ratings</string>
 
 </resources>

@@ -23,5 +23,8 @@
     <string name="web_err_msg">حدث خطأ أثناء الاتصال بموقع الويب! الرجاء المحاولة لاحقا </string>
     <string name="map_err_msg">حدث خطأ أثناء الاتصال بالخريطة! الرجاء المحاولة لاحقا</string>
     <string name="welcome_msg">أهلا بك! البحث بالقرب من المواقع</string>
+    <string name="connection_issue_msg">مشكلة الاتصال! يرجى المحاولة بعد مرور بعض الوقت.</string>
+    <string name="review_label">مراجعة والتقييمات</string>
+
 
 </resources>

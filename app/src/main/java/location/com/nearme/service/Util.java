@@ -1,36 +1,44 @@
 package location.com.nearme.service;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.LinkedHashMap;
 
+import location.com.nearme.ApplicationConstant;
 import location.com.nearme.BuildConfig;
 
 public class Util {
-    enum NearBy {
-        v,
-        ll,
-        intent,
+    enum PlaceListKeys {
+        location,
         radius,
-        categoryId,
-        client_id,
-        client_secret
+        type,
+        key,
+        pagetoken
     }
 
-    public static   LinkedHashMap<String, String> prepareNearByPlaceAPIQueryParam(String lat, String lon) {
+    enum PlaceDetailKeys {
+        placeid,
+        key
+    }
+
+
+    public static LinkedHashMap<String, String> preparePlaceAPIQueryParam(String location, ApplicationConstant.SEARCH_OPTIONS type, String pageToken) {
         LinkedHashMap<String, String> queryparam = new LinkedHashMap<>();
-        queryparam.put(NearBy.v.name(), BuildConfig.API_Version);
-        queryparam.put(NearBy.ll.name(),concatLatLon(lat,lon));
-        queryparam.put(NearBy.intent.name(), "browse");
-        queryparam.put(NearBy.radius.name(), "1000");
-        queryparam.put(NearBy.categoryId.name(), "4d4b7105d754a06374d81259");
-        queryparam.put(NearBy.client_id.name(), BuildConfig.client_id);
-        queryparam.put(NearBy.client_secret.name(), BuildConfig.secret_key);
+        queryparam.put(PlaceListKeys.location.name(), location);
+        queryparam.put(PlaceListKeys.type.name(), type.getValue());
+        queryparam.put(PlaceListKeys.radius.name(), "1000");
+        queryparam.put(PlaceListKeys.key.name(), BuildConfig.secret_key);
+        if (StringUtils.isNotEmpty(pageToken))
+            queryparam.put(PlaceListKeys.pagetoken.name(), pageToken);
 
         return queryparam;
     }
 
-    private static String concatLatLon(String lat, String lon) {
-        return lat+","+lon;
+
+    public static LinkedHashMap<String, String> prepareDetailAPIQueryParam(String placeId) {
+        LinkedHashMap<String, String> queryparam = new LinkedHashMap<>();
+        queryparam.put(PlaceDetailKeys.placeid.name(), placeId);
+        queryparam.put(PlaceDetailKeys.key.name(), BuildConfig.secret_key);
+        return queryparam;
     }
-
-
 }

@@ -12,56 +12,33 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbarLayout"
+            android:id="@+id/list_collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/span_10dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.7">
 
                 <ImageView
-                    android:id="@+id/parallax_header_imageview"
+                    android:id="@+id/list_parallax_header_imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/mall" />
+                    android:src="@drawable/atm_img"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.7"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/span_10dp"
-                    android:text="Welcome! Find near by locations" />
-            </LinearLayout>
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_android"
+                android:id="@+id/list_toolbar_android"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-
-            <Button
-                android:id="@+id/search_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="@dimen/span_10dp"
-                android:layout_marginTop="@dimen/span_10dp"
-                android:background="@color/colorPrimaryDark"
-                android:padding="@dimen/span_10dp"
-                android:text="Search"
-                app:layout_collapseMode="parallax" />
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -74,7 +51,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/listView"
+            android:id="@+id/list_listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#fff"

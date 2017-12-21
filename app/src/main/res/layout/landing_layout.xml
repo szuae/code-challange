@@ -31,6 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/span_30dp"
             android:layout_marginStart="@dimen/span_30dp"
+            android:paddingStart="@dimen/span_10dp"
+            android:paddingEnd="@dimen/span_10dp"
             android:layout_marginTop="@dimen/span_20dp"
             android:background="@drawable/edit_text_background"
             android:drawableRight="@drawable/location"

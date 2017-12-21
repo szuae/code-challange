@@ -16,7 +16,7 @@ import location.com.nearme.landing.LandingPresenter;
 import location.com.nearme.network.NetworkLayer;
 import location.com.nearme.repository.DataRepository;
 import location.com.nearme.repository.DataRepositoryImpl;
-import location.com.nearme.service.FoursquareServices;
+import location.com.nearme.service.GooglePlaceServices;
 
 @Module
 public class NearMeApplicationModule {
@@ -48,13 +48,13 @@ public class NearMeApplicationModule {
 
     @Singleton
     @Provides
-    public DataRepository provideDataRepository(FoursquareServices service) {
+    public DataRepository provideDataRepository(GooglePlaceServices service) {
         return new DataRepositoryImpl(service, Schedulers.io(), AndroidSchedulers.mainThread());
     }
 
     @Provides
-    public FoursquareServices provideSerive(NetworkLayer networkLayer) {
-        return networkLayer.createApiService(FoursquareServices.class);
+    public GooglePlaceServices provideSerive(NetworkLayer networkLayer) {
+        return networkLayer.createApiService(GooglePlaceServices.class);
     }
 
     @Provides

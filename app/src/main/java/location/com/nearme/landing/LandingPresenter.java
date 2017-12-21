@@ -1,5 +1,7 @@
 package location.com.nearme.landing;
 
+import android.support.annotation.VisibleForTesting;
+
 import location.com.nearme.ApplicationConstant;
 import location.com.nearme.IDInterface;
 
@@ -11,36 +13,85 @@ public class LandingPresenter implements LandingContract.Presenter {
 
     @Override
     public void identifyOptionIdForSearch(int resourceId) {
-        String optionId = "";
         switch (resourceId) {
             case IDInterface.LandingPageIds.atmId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.ATM.getValue();
+                onATMClicked();
                 break;
             case IDInterface.LandingPageIds.fitnessId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.FITNESS.getValue();
+                onFitnessClicked();
                 break;
             case IDInterface.LandingPageIds.cafeId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.CAFE.getValue();
+                onCafeClicked();
                 break;
             case IDInterface.LandingPageIds.gasId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.GAS.getValue();
+                onGasClicked();
                 break;
             case IDInterface.LandingPageIds.mallId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.SHOPPING.getValue();
+                onMallClicked();
                 break;
             case IDInterface.LandingPageIds.movieId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.MOVIES.getValue();
+                onMoviesClicked();
                 break;
             case IDInterface.LandingPageIds.parkingId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.PARKING.getValue();
+                onParkingClicked();
                 break;
             case IDInterface.LandingPageIds.pharmacyId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.PHARMACY.getValue();
+                onPharmacyClicked();
                 break;
             case IDInterface.LandingPageIds.resturantId:
-                optionId = ApplicationConstant.SEARCH_OPTIONS.RESTURANT.getValue();
+                onResturantClicked();
                 break;
         }
+
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onATMClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.ATM);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onCafeClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.CAFE);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onFitnessClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.FITNESS);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onGasClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.GASOLINE);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onMallClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.SHOPPING);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onMoviesClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.MOVIES);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onParkingClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.PARKING);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onPharmacyClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.PHARMACY);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void onResturantClicked() {
+        updateUI(ApplicationConstant.SEARCH_OPTIONS.RESTURANT);
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void updateUI(ApplicationConstant.SEARCH_OPTIONS optionId) {
         if (view != null)
             view.openSearchListScreen(optionId);
     }

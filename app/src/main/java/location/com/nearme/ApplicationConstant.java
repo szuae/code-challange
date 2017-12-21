@@ -7,7 +7,7 @@ public interface ApplicationConstant {
         ATM("atm"),
         CAFE("cafe"),
         FITNESS("gym"),
-        GAS("gas_station"),
+        GASOLINE("gas_station"),
         SHOPPING("shopping_mall"),
         MOVIES("movie_theater"),
         PARKING("parking"),

@@ -28,31 +28,45 @@ public class DetailPresenter implements DetailContract.Presenter {
     public void invokeContactOption(int resourceId) {
         switch (resourceId) {
             case IDInterface.DetailPageIds.callId:
-                if (isPhoneNumberValid(nearbyPlacesObject.getPhone_number())) {
-                    view.actionIfValidPhoneNumber(nearbyPlacesObject.getPhone_number());
-                } else {
-                    view.showErrorOnInvalidPhoneNumber();
-                }
+                actionOnCallClick();
                 break;
 
             case IDInterface.DetailPageIds.webId:
-                if (isUrlValid(nearbyPlacesObject.getWebsite())) {
-                    view.actionIfValidWebAddress(nearbyPlacesObject.getWebsite());
-                } else {
-                    view.showErrorOnInvalidWebAddress();
-                }
+                actionOnWebClick();
                 break;
 
             case IDInterface.DetailPageIds.mapId:
-                if (isUrlValid(nearbyPlacesObject.getUrl())) {
-                    view.actionIfValidMapUrl(nearbyPlacesObject.getUrl());
-                } else {
-                    view.showErrorOnInvalidMapUrl();
-                }
+                actionOnMapClick();
                 break;
         }
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void actionOnCallClick() {
+        if (isPhoneNumberValid(nearbyPlacesObject.getPhone_number())) {
+            view.actionIfValidPhoneNumber(nearbyPlacesObject.getPhone_number());
+        } else {
+            view.showErrorOnInvalidPhoneNumber();
+        }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void actionOnWebClick() {
+        if (isUrlValid(nearbyPlacesObject.getWebsite())) {
+            view.actionIfValidWebAddress(nearbyPlacesObject.getWebsite());
+        } else {
+            view.showErrorOnInvalidWebAddress();
+        }
+    }
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void actionOnMapClick() {
+        if (isUrlValid(nearbyPlacesObject.getUrl())) {
+            view.actionIfValidMapUrl(nearbyPlacesObject.getUrl());
+        } else {
+            view.showErrorOnInvalidMapUrl();
+        }
+    }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public boolean isUrlValid(String url) {

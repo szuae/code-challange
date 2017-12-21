@@ -9,6 +9,9 @@ import retrofit2.http.QueryMap;
 
 public interface GooglePlaceServices {
 
-    @GET ("v2/venues/search")
-    public Observable<NearbyPlacesResponseDTO> fetchNearByPlaces(@QueryMap LinkedHashMap<String, String> data);
+    @GET ("nearbysearch/json")
+    public Observable<NearbyPlacesResponseDTO> placeList(@QueryMap LinkedHashMap<String, String> data);
+
+    @GET ("details/json")
+    public Observable<NearbyPlacesResponseDTO> placeDetails(@QueryMap LinkedHashMap<String, String> data);
 }

@@ -12,7 +12,6 @@ import location.com.nearme.model.NearbyPlacesObject;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -22,10 +21,26 @@ public class DetailPresenterTest {
     @Mock
     DetailContract.View view;
 
+    NearbyPlacesObject positiveObject;
+    NearbyPlacesObject negativeObject;
+
     @Before
     public void setup() {
-        presenter = new DetailPresenter();
+        presenter = Mockito.spy(new DetailPresenter());
         presenter.setView(view);
+        //positive scenario
+        positiveObject = new NearbyPlacesObject.Builder()
+                .phone_number("+971554598927")
+                .url("http://www.google.com?value=123")
+                .website("http://www.google.com")
+                .build();
+
+        //Negative scenario
+        negativeObject = new NearbyPlacesObject.Builder()
+                .phone_number("abc")
+                .url("abc")
+                .website("abc")
+                .build();
     }
 
     @Test
@@ -82,79 +97,72 @@ public class DetailPresenterTest {
     }
 
     @Test
-    public void invokeContactOptionPositiveTest() {
-        //positive scenario
-        NearbyPlacesObject object = new NearbyPlacesObject.Builder()
-                .phone_number("+971554598927")
-                .url("http://www.google.com?value=123")
-                .website("http://www.google.com")
-                .build();
+    public void actionOnCallClickTest() {
+        presenter.setData(positiveObject);
+        presenter.actionOnCallClick();
+        verify(view, Mockito.times(1)).actionIfValidPhoneNumber(positiveObject.getPhone_number());
 
-        presenter.setData(object);
+        Mockito.reset(presenter);
 
-        presenter.invokeContactOption(IDInterface.DetailPageIds.callId);
-        verify(view, Mockito.times(1)).actionIfValidPhoneNumber(object.getPhone_number());
-        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
-        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
-        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
-        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
-        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
-
-        Mockito.reset(view);
-        presenter.invokeContactOption(IDInterface.DetailPageIds.mapId);
-        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
-        verify(view, Mockito.times(1)).actionIfValidMapUrl(object.getUrl());
-        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
-        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
-        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
-        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
-
-
-        Mockito.reset(view);
-        presenter.invokeContactOption(IDInterface.DetailPageIds.webId);
-        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
-        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
-        verify(view, Mockito.times(1)).actionIfValidWebAddress(object.getWebsite());
-        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
-        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
-        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
+        presenter.setData(negativeObject);
+        presenter.actionOnCallClick();
+        verify(view, Mockito.times(1)).showErrorOnInvalidPhoneNumber();
     }
 
     @Test
-    public void invokeContactOptionNegativeTest() {
-        //Negative scenario
-        NearbyPlacesObject object = new NearbyPlacesObject.Builder()
-                .phone_number("abc")
-                .url("abc")
-                .website("abc")
-                .build();
+    public void actionOnwebClickTest() {
+        presenter.setData(positiveObject);
+        presenter.actionOnWebClick();
+        verify(view, Mockito.times(1)).actionIfValidWebAddress(positiveObject.getWebsite());
 
-        presenter.setData(object);
+        Mockito.reset(presenter);
 
-        presenter.invokeContactOption(IDInterface.DetailPageIds.callId);
-        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
-        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
-        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
-        verify(view, Mockito.times(1)).showErrorOnInvalidPhoneNumber();
-        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
-        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
-
-        Mockito.reset(view);
-        presenter.invokeContactOption(IDInterface.DetailPageIds.mapId);
-        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
-        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
-        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
-        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
-        verify(view, Mockito.times(1)).showErrorOnInvalidMapUrl();
-        verify(view, Mockito.times(0)).showErrorOnInvalidWebAddress();
-
-        Mockito.reset(view);
-        presenter.invokeContactOption(IDInterface.DetailPageIds.webId);
-        verify(view, Mockito.times(0)).actionIfValidPhoneNumber(object.getPhone_number());
-        verify(view, Mockito.times(0)).actionIfValidMapUrl(object.getUrl());
-        verify(view, Mockito.times(0)).actionIfValidWebAddress(object.getWebsite());
-        verify(view, Mockito.times(0)).showErrorOnInvalidPhoneNumber();
-        verify(view, Mockito.times(0)).showErrorOnInvalidMapUrl();
+        presenter.setData(negativeObject);
+        presenter.actionOnWebClick();
         verify(view, Mockito.times(1)).showErrorOnInvalidWebAddress();
     }
+
+
+    @Test
+    public void actionOnMapClickTest() {
+        presenter.setData(positiveObject);
+        presenter.actionOnMapClick();
+        verify(view, Mockito.times(1)).actionIfValidMapUrl(positiveObject.getUrl());
+
+        Mockito.reset(presenter);
+
+        presenter.setData(negativeObject);
+        presenter.actionOnMapClick();
+        verify(view, Mockito.times(1)).showErrorOnInvalidMapUrl();
+    }
+
+
+    @Test
+    public void invokeContactOptionTest() {
+        presenter.setData(positiveObject);
+        presenter.invokeContactOption(IDInterface.DetailPageIds.callId);
+        verify(presenter, Mockito.times(1)).actionOnCallClick();
+        verify(presenter, Mockito.times(0)).actionOnMapClick();
+        verify(presenter, Mockito.times(0)).actionOnWebClick();
+
+
+        Mockito.reset(presenter);
+
+        presenter.setData(positiveObject);
+        presenter.invokeContactOption(IDInterface.DetailPageIds.mapId);
+        verify(presenter, Mockito.times(1)).actionOnMapClick();
+        verify(presenter, Mockito.times(0)).actionOnWebClick();
+        verify(presenter, Mockito.times(0)).actionOnCallClick();
+
+
+        Mockito.reset(presenter);
+
+        presenter.setData(positiveObject);
+        presenter.invokeContactOption(IDInterface.DetailPageIds.webId);
+        verify(presenter, Mockito.times(0)).actionOnMapClick();
+        verify(presenter, Mockito.times(0)).actionOnMapClick();
+        verify(presenter, Mockito.times(1)).actionOnWebClick();
+
+    }
+
 }

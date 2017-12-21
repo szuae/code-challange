@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -51,8 +53,8 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
         setRootView(container);
         presenter.setView(this);
         view = inflater.inflate(R.layout.landing_layout, container, false);
-        ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
+        unbinder = ButterKnife.bind(this,view);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         return view;
     }
@@ -76,6 +78,7 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
     public void onDetach() {
         super.onDetach();
         presenter.setView(null);
+
     }
 
     @Override
@@ -111,7 +114,7 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
     }
 
     @Override
-    public void openSearchListScreen(String searchOptionId) {
+    public void openSearchListScreen(ApplicationConstant.SEARCH_OPTIONS searchOptionId) {
         ((NearMe) getActivity()).goToListScreen(searchOptionId);
     }
 }

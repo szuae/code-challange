@@ -14,7 +14,7 @@ public class NearbyPlacesObject implements Serializable {
     String name;
     String website;
     String url;
-    double rating;
+    float rating;
     double lat;
     double lng;
     boolean open_now;
@@ -70,7 +70,7 @@ public class NearbyPlacesObject implements Serializable {
         return url;
     }
 
-    public double getRating() {
+    public float getRating() {
         return rating;
     }
 
@@ -103,7 +103,7 @@ public class NearbyPlacesObject implements Serializable {
         private String name;
         private String website;
         private String url;
-        private double rating;
+        private float rating;
         private double lat;
         private double lng;
         private boolean open_now;
@@ -153,7 +153,7 @@ public class NearbyPlacesObject implements Serializable {
             return this;
         }
 
-        public Builder rating(double val) {
+        public Builder rating(float val) {
             rating = val;
             return this;
         }

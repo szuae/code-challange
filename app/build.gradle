@@ -52,17 +52,13 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BaseURL", '"https://api.foursquare.com/"'
-            buildConfigField "String", "API_Version", '"20161016"'
-            buildConfigField "String", "client_id", '"41B3DTAR5ZOHK0LUXB1MVF0JFMZP4IJ5PF2ZQFBNENBUBRJM"'
-            buildConfigField "String", "secret_key", '"OQBZK0IPP3F1AF4SS4KM401QZU3LWP102SBXEG0YKNWCM5TN"'
+            buildConfigField "String", "BaseURL", '"https://maps.googleapis.com/maps/api/place/"'
+            buildConfigField "String", "secret_key", '"AIzaSyCaIcADhhb5RNJ0dxfiPjI7y_ViQ_ll9WY"'
         }
         debug {
             minifyEnabled false
-            buildConfigField "String", "BaseURL", '"https://api.foursquare.com/"'
-            buildConfigField "String", "API_Version", '"20161016"'
-            buildConfigField "String", "client_id", '"41B3DTAR5ZOHK0LUXB1MVF0JFMZP4IJ5PF2ZQFBNENBUBRJM"'
-            buildConfigField "String", "secret_key", '"OQBZK0IPP3F1AF4SS4KM401QZU3LWP102SBXEG0YKNWCM5TN"'
+            buildConfigField "String", "BaseURL", '"https://maps.googleapis.com/maps/api/place/"'
+            buildConfigField "String", "secret_key", '"AIzaSyCaIcADhhb5RNJ0dxfiPjI7y_ViQ_ll9WY"'
         }
         coverage {
             initWith release
@@ -114,6 +110,7 @@ dependencies {
     compile "com.android.support:design:$SUPPORT_VERSION"
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     compile group: 'commons-validator', name: 'commons-validator', version: '1.4.0'
+    compile 'com.github.bumptech.glide:glide:3.8.0'
 
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"
     testImplementation "junit:junit:$JUNIT_VERSION"

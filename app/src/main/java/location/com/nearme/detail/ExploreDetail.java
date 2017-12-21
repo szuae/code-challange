@@ -61,7 +61,8 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ((NearMeApplication) getActivity().getApplication()).getComponent().inject(this);
         view = inflater.inflate(R.layout.detail, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this,view);
+
         return view;
     }
 

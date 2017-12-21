@@ -83,7 +83,7 @@ public class NearMe extends AppCompatActivity implements GoogleApiClient.Connect
         locationHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void goToListScreen(String search_optionId) {
+    public void goToListScreen(ApplicationConstant.SEARCH_OPTIONS search_optionId) {
         this.loadFragment(ExploreList.newInstance(search_optionId), TransactionType.Replace, AnimationType.Fading);
     }
 
