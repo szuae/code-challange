@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -21,6 +25,7 @@ import location.com.nearme.BaseFragment;
 import location.com.nearme.NearMeApplication;
 import location.com.nearme.R;
 import location.com.nearme.model.NearbyPlacesObject;
+import location.com.nearme.repository.ImageLoader;
 
 
 public class ExploreDetail extends BaseFragment implements DetailContract.View {
@@ -31,6 +36,9 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
 
     @Inject
     DetailContract.Presenter presenter;
+
+    @Inject
+    ImageLoader imageLoader;
 
     @BindView(R.id.detail_photos)
     ImageView photo;
@@ -45,7 +53,14 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
     RatingBar ratingBar;
 
     @BindView(R.id.detail_is_working)
-    TextView isWorkingStatus;
+    TextView workingStatus;
+
+    @BindView(R.id.deatil_toolbar_id)
+    Toolbar toolbar;
+
+    NearbyPlacesObject nearbyPlacesObject;
+
+    ReviewAdapter reviewAdapter;
 
     public static ExploreDetail newInstance(NearbyPlacesObject obj) {
         ExploreDetail detail = new ExploreDetail();
@@ -61,16 +76,36 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ((NearMeApplication) getActivity().getApplication()).getComponent().inject(this);
         view = inflater.inflate(R.layout.detail, container, false);
-        unbinder = ButterKnife.bind(this,view);
-
+        nearbyPlacesObject = (NearbyPlacesObject) getArguments().getSerializable(SELECTED_ITEM);
+        unbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        NearbyPlacesObject obj = (NearbyPlacesObject) getArguments().getSerializable(SELECTED_ITEM);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         presenter.setView(this);
+        updateUI();
+    }
+
+    private void updateUI() {
+        name.setText(nearbyPlacesObject.getName());
+        address.setText(nearbyPlacesObject.getAddress());
+        ratingBar.setRating(nearbyPlacesObject.getRating());
+        if (nearbyPlacesObject.isOpen_now()) {
+            workingStatus.setText(getResources().getString(R.string.open_label));
+            workingStatus.setTextColor(getResources().getColor(R.color.open_text_color));
+        } else {
+            workingStatus.setText(getResources().getString(R.string.close_label));
+            workingStatus.setTextColor(getResources().getColor(R.color.colorPrimary));
+        }
+
+        imageLoader.loadImage(photo, getContext(),
+                nearbyPlacesObject.getPhotos()[0].getPhoto_reference(),
+                photo.getHeight(), photo.getWidth());
+        reviewAdapter.setData(Arrays.asList(nearbyPlacesObject.getReviews()));
+        reviewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -93,7 +128,7 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
 
     @Override
     public void showErrorOnInvalidPhoneNumber() {
-        showErrorToast(getResources().getString(R.string.phone_err_msg));
+        showError(getResources().getString(R.string.phone_err_msg));
     }
 
     @Override
@@ -103,7 +138,7 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
 
     @Override
     public void showErrorOnInvalidWebAddress() {
-        showErrorToast(getResources().getString(R.string.web_err_msg));
+        showError(getResources().getString(R.string.web_err_msg));
     }
 
     @Override
@@ -113,12 +148,13 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
 
     @Override
     public void showErrorOnInvalidMapUrl() {
-        showErrorToast(getResources().getString(R.string.map_err_msg));
+        showError(getResources().getString(R.string.map_err_msg));
     }
 
 
-    private void showErrorToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
+    private void showError(String msg) {
+        Snackbar.make(getActivity().findViewById(android.R.id.content),
+                msg, Snackbar.LENGTH_LONG).show();
     }
 
     private void openUrl(String url) {

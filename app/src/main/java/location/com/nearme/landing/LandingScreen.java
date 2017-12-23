@@ -2,19 +2,21 @@ package location.com.nearme.landing;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.bumptech.glide.Glide;
+import android.widget.EditText;
 
 import java.util.Locale;
 
@@ -26,22 +28,32 @@ import butterknife.OnClick;
 import location.com.nearme.ApplicationConstant;
 import location.com.nearme.Applicationconfig;
 import location.com.nearme.BaseFragment;
+import location.com.nearme.BuildConfig;
 import location.com.nearme.NearMe;
 import location.com.nearme.NearMeApplication;
 import location.com.nearme.R;
+import location.com.nearme.uiutil.AlertInterface;
+import location.com.nearme.uiutil.AlertMessage;
+import location.com.nearme.util.LocationHelper;
 
 public class LandingScreen extends BaseFragment implements LandingContract.View {
 
     @Inject
     LandingContract.Presenter presenter;
 
+
     @Inject
     Applicationconfig applicationconfig;
 
-    @BindView(R.id.toolbar_id)
-    Toolbar toolbar;
-    View view;
+    @Inject
+    LocationHelper locationHelper;
 
+    @BindView(R.id.landing_location)
+    EditText locationInput;
+
+    View view;
+    String location;
+    Location locationObj;
 
     public static LandingScreen newInstance() {
         return new LandingScreen();
@@ -54,9 +66,58 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
         presenter.setView(this);
         view = inflater.inflate(R.layout.landing_layout, container, false);
         setHasOptionsMenu(true);
-        unbinder = ButterKnife.bind(this,view);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        unbinder = ButterKnife.bind(this, view);
+        init();
         return view;
+    }
+
+
+    private void init() {
+        locationInput.setOnTouchListener(new View.OnTouchListener() {
+            final int DRAWABLE_RIGHT = 2;
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (motionEvent.getRawX() >= (locationInput.getRight() - locationInput.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        fetchLocation();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+    }
+
+    private void fetchLocation() {
+        Log.e("saify", "isgranted ::: " + locationHelper.isPermissionGranted());
+        if (locationHelper.isPermissionGranted()) {
+            locationObj = ((NearMe) getActivity()).getMyLocation();
+            double lat = locationObj.getLatitude();
+            double lon = locationObj.getLongitude();
+            Log.e("saify", "::::" + lat + "::::" + lon);
+            location = lat + "," + lon;
+            locationInput.setText(locationHelper.getAddress(lat, lon));
+        } else {
+            new AlertMessage().show(getContext(),
+                    getResources().getString(R.string.location_alert_title),
+                    getResources().getString(R.string.location_alert_message),
+                    ApplicationConstant.AlertButton.TwoButtons,
+                    new AlertInterface() {
+                        @Override
+                        public void onPositiveButtonClick() {
+                            startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                    Uri.parse("package:" + BuildConfig.APPLICATION_ID)));
+                        }
+
+                        @Override
+                        public void onNegativeButtonClick() {
+                            //nothing
+                        }
+                    });
+
+        }
     }
 
 
@@ -110,11 +171,31 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
         config.locale = locale;
         context.getApplicationContext().getResources().updateConfiguration(config, null);
         applicationconfig.setLanguage(language);
-        ((NearMe)getActivity()).refreshFragmentOnLanguageChange(getClass().getName());
+        ((NearMe) getActivity()).refreshFragmentOnLanguageChange(getClass().getName());
     }
 
     @Override
     public void openSearchListScreen(ApplicationConstant.SEARCH_OPTIONS searchOptionId) {
-        ((NearMe) getActivity()).goToListScreen(searchOptionId);
+        if (location != null) {
+            applicationconfig.reset();
+            ((NearMe) getActivity()).goToListScreen(searchOptionId, location);
+        } else {
+            new AlertMessage().show(getContext(),
+                    getResources().getString(R.string.select_location_alert_title),
+                    getResources().getString(R.string.select_location_alert_message),
+                    ApplicationConstant.AlertButton.SingleButton,
+                    new AlertInterface() {
+                        @Override
+                        public void onPositiveButtonClick() {
+                            //nothing
+                        }
+
+                        @Override
+                        public void onNegativeButtonClick() {
+                            //nothing
+                        }
+                    });
+        }
+
     }
 }

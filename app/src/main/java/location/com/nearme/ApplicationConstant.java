@@ -2,6 +2,13 @@ package location.com.nearme;
 
 
 public interface ApplicationConstant {
+    public interface ApiStatusCode {
+        public String OK = "OK";
+        public String NO_RESULTS = "ZERO_RESULTS";
+        public String LIMIT_REACHED = "OVER_QUERY_LIMIT";
+        public String KEY_INVALID = "REQUEST_DENIED";
+        public String REQUEST_INVALID = "INVALID_REQUEST";
+    }
 
     public static enum SEARCH_OPTIONS {
         ATM("atm"),
@@ -39,4 +46,13 @@ public interface ApplicationConstant {
             return id;
         }
     }
+
+    public static enum AlertButton {
+
+        SingleButton,
+        TwoButtons,
+        NoButton;
+    }
+
+
 }

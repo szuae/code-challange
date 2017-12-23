@@ -20,4 +20,8 @@ public class Applicationconfig {
     public void setLanguage(ApplicationConstant.LANGUAGE language) {
         this.language = language;
     }
+
+    public void reset() {
+        paginationId = "";
+    }
 }

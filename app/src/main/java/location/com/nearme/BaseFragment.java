@@ -3,14 +3,14 @@ package location.com.nearme;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import location.com.nearme.utilitycomponent.ConnectivityUtil;
 import location.com.nearme.utilitycomponent.ConnectivityUtilImpl;
@@ -58,10 +58,23 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    public void displayHomeUp() {
+        boolean canback = getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0;
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
+        getActivity().getSupportFragmentManager()
+                .addOnBackStackChangedListener(new OnBackStackChangedListener() {
+                    @Override
+                    public void onBackStackChanged() {
+                        getActivity().getSupportFragmentManager().popBackStack();
+                    }
+                });
+
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
-        if(unbinder != null)
+        if (unbinder != null)
             unbinder.unbind();
     }
 }

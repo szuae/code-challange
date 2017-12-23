@@ -21,8 +21,8 @@ public class ListPresenter implements ListContract.Presenter {
     }
 
 
-    public void call(String lat, String lon) {
-        repo.fetchNearByPlaces(lat, lon).subscribe(new Consumer<ArrayList<NearbyPlacesObject>>() {
+    public void call(String location) {
+        repo.loadData(location).subscribe(new Consumer<ArrayList<NearbyPlacesObject>>() {
             @Override
             public void accept(ArrayList<NearbyPlacesObject> list) throws Exception {
                 if (view != null)
@@ -37,12 +37,17 @@ public class ListPresenter implements ListContract.Presenter {
     }
 
     @Override
-    public void fetchCoOrdinates(String lat, String lon) {
-        call(lat, lon);
+    public void fetchCoOrdinates(String location) {
+        call(location);
     }
 
     @Override
     public void setView(ListContract.View view) {
         this.view = view;
+    }
+
+    @Override
+    public void loadData(String location) {
+        call(location);
     }
 }

@@ -25,6 +25,11 @@
     <string name="welcome_msg">أهلا بك! البحث بالقرب من المواقع</string>
     <string name="connection_issue_msg">مشكلة الاتصال! يرجى المحاولة بعد مرور بعض الوقت.</string>
     <string name="review_label">مراجعة والتقييمات</string>
+    <string name="location_hint_with_location_service">انقر على الزر أو أدخل الموقع</string>
+    <string name="location_alert_title">تمكن موقع</string>
+    <string name="location_alert_message">هل تريد تمكين إذن الموقع؟</string>
 
+    <string name="select_location_alert_title">اختر موقعا</string>
+    <string name="select_location_alert_message">الرجاء تحديد الموقع للمتابعة ..</string>
 
 </resources>

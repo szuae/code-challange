@@ -16,4 +16,7 @@ public interface NearMeApplicationComponent {
     void inject(ExploreDetail exploreDetail);
 
     void inject(LandingScreen landingScreen);
+
+    void inject(NearMe nearMe);
+
 }

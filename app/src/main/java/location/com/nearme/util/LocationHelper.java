@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -22,7 +24,10 @@ import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 
 public class LocationHelper implements PermissionUtils.PermissionResultCallback {
@@ -46,8 +51,8 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback 
     private final static int PLAY_SERVICES_REQUEST = 1000;
     private final static int REQUEST_CHECK_SETTINGS = 2000;
 
-    public LocationHelper(Context context) {
 
+    public void init(Context context){
         this.context = context;
         this.current_activity = (Activity) context;
 
@@ -57,7 +62,6 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback 
         permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
 
     }
-
     /**
      * Method to check the availability of location permissions
      */
@@ -66,10 +70,27 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback 
         permissionUtils.check_permission(permissions, "Need GPS permission for getting your location", 1);
     }
 
-    private boolean isPermissionGranted() {
+    public boolean isPermissionGranted() {
         return isPermissionGranted;
     }
 
+    public String getAddress(double latitude,double longitude)
+    {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(context, Locale.getDefault());
+
+        try {
+            addresses = geocoder.getFromLocation(latitude,longitude, 1);
+            return addresses.get(0).getAddressLine(0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
     /**
      * Method to verify google play services on the device
      */
@@ -99,21 +120,16 @@ public class LocationHelper implements PermissionUtils.PermissionResultCallback 
     public Location getLocation() {
 
         if (isPermissionGranted()) {
-
             try {
                 mLastLocation = LocationServices.FusedLocationApi
                         .getLastLocation(mGoogleApiClient);
-
                 return mLastLocation;
             } catch (SecurityException e) {
                 e.printStackTrace();
 
             }
-
         }
-
         return null;
-
     }
 
 

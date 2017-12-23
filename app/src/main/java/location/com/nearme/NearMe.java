@@ -14,35 +14,48 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import javax.inject.Inject;
+
 import location.com.nearme.browse.ExploreList;
 import location.com.nearme.detail.ExploreDetail;
 import location.com.nearme.landing.LandingScreen;
 import location.com.nearme.model.NearbyPlacesObject;
+import location.com.nearme.repository.ImageLoader;
 import location.com.nearme.util.LocationHelper;
 
 public class NearMe extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
 
+    @Inject
     LocationHelper locationHelper;
+
+    @Inject
+    ImageLoader imageLoader;
+
     private Location lastLocation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_places);
-        locationHelper = new LocationHelper(this);
+        ((NearMeApplication) getApplication()).getComponent().inject(this);
+        locationHelper.init(this);
         locationHelper.checkpermission();
         // check availability of play services
         if (locationHelper.checkPlayServices()) {
-
             // Building the GoogleApi client
             locationHelper.buildGoogleApiClient();
         }
         lastLocation = locationHelper.getLocation();
 
-
         goToLandingScreen();
+
+        imageLoader.initImageViewer(getApplicationContext());
+        //image viewer
+//
+
     }
 
     public Location getMyLocation() {
@@ -83,25 +96,25 @@ public class NearMe extends AppCompatActivity implements GoogleApiClient.Connect
         locationHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    public void goToListScreen(ApplicationConstant.SEARCH_OPTIONS search_optionId) {
-        this.loadFragment(ExploreList.newInstance(search_optionId), TransactionType.Replace, AnimationType.Fading);
+    public void goToListScreen(ApplicationConstant.SEARCH_OPTIONS search_optionId, String location) {
+        this.loadFragment(ExploreList.newInstance(search_optionId, location), TransactionType.Replace, AnimationType.Fading);
     }
 
     public void refreshFragmentOnLanguageChange(String fragmentTag) {
         // toolbar RTL update
-        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR){
+        if (getWindow().getDecorView().getLayoutDirection() == View.LAYOUT_DIRECTION_LTR) {
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        }
-        else {
+        } else {
             getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
 
-        Fragment  fragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(fragmentTag);
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.detach(fragment);
         fragmentTransaction.attach(fragment);
         fragmentTransaction.commit();
     }
+
     public void goToLandingScreen() {
         this.loadFragment(LandingScreen.newInstance(), TransactionType.Add, AnimationType.FromLeft);
     }

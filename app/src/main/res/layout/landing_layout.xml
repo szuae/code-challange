@@ -27,6 +27,7 @@
             android:text="@string/welcome_msg" />
 
         <EditText
+            android:id="@+id/landing_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/span_30dp"
@@ -34,7 +35,10 @@
             android:paddingStart="@dimen/span_10dp"
             android:paddingEnd="@dimen/span_10dp"
             android:layout_marginTop="@dimen/span_20dp"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
             android:background="@drawable/edit_text_background"
+            android:hint="@string/location_hint_with_location_service"
             android:drawableRight="@drawable/location"
             android:paddingHorizontal="@dimen/span_10dp"
             android:paddingVertical="@dimen/span_5dp" />
