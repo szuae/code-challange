@@ -7,16 +7,16 @@ import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NearbyPlacesDetailResponseDTO implements Serializable {
-    public Result results;
+    public Result result;
     public String status;
 
     private NearbyPlacesDetailResponseDTO(Builder builder) {
-        results = builder.results;
+        result = builder.results;
         status = builder.status;
     }
 
-    public Result getResults() {
-        return results;
+    public Result getResult() {
+        return result;
     }
 
     public String getStatus() {
@@ -35,7 +35,7 @@ public class NearbyPlacesDetailResponseDTO implements Serializable {
         public String url;
         public double rating;
 
-        public Coordinates geomerty;
+        public Coordinates geometry;
         public WorkingHours opening_hours;
         public Photos[] photos;
         public Reviews[] reviews;
@@ -50,7 +50,7 @@ public class NearbyPlacesDetailResponseDTO implements Serializable {
             website = builder.website;
             url = builder.url;
             rating = builder.rating;
-            geomerty = builder.geomerty;
+            geometry = builder.geometry;
             opening_hours = builder.opening_hours;
             photos = builder.photos;
             reviews = builder.reviews;
@@ -92,8 +92,8 @@ public class NearbyPlacesDetailResponseDTO implements Serializable {
             return rating;
         }
 
-        public Coordinates getGeomerty() {
-            return geomerty;
+        public Coordinates getGeometry() {
+            return geometry;
         }
 
         public WorkingHours getOpening_hours() {
@@ -360,7 +360,7 @@ public class NearbyPlacesDetailResponseDTO implements Serializable {
             private String website;
             private String url;
             private double rating;
-            private Coordinates geomerty;
+            private Coordinates geometry;
             private WorkingHours opening_hours;
             private Photos[] photos;
             private Reviews[] reviews;
@@ -414,7 +414,7 @@ public class NearbyPlacesDetailResponseDTO implements Serializable {
             }
 
             public Builder geomerty(Coordinates val) {
-                geomerty = val;
+                geometry = val;
                 return this;
             }
 

@@ -65,8 +65,8 @@ public class NearMeApplicationModule {
 
     @Singleton
     @Provides
-    public DataRepository provideDataRepository(GooglePlaceServices service) {
-        return new DataRepositoryImpl(service, Schedulers.io(), AndroidSchedulers.mainThread());
+    public DataRepository provideDataRepository(GooglePlaceServices service, Applicationconfig applicationconfig) {
+        return new DataRepositoryImpl(service, Schedulers.io(), AndroidSchedulers.mainThread(), applicationconfig);
     }
 
     @Provides

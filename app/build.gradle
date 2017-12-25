@@ -111,7 +111,7 @@ dependencies {
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     compile group: 'commons-validator', name: 'commons-validator', version: '1.4.0'
     compile 'com.github.bumptech.glide:glide:3.8.0'
-    compile 'com.github.stfalcon:frescoimageviewer:0.5.0'
+    compile 'com.facebook.fresco:fresco:1.7.1'
 
 
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"

@@ -5,7 +5,7 @@
     android:id="@+id/list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/span_20dp">
+    android:layout_margin="@dimen/span_10dp">
 
 
     <TextView
@@ -34,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/list_address"
-        android:layout_marginVertical="@dimen/span_5dp"
+        android:layout_marginTop="@dimen/span_5dp"
+        android:theme="@style/ratingBar"
         android:numStars="5"
         android:rating="2" />
 
@@ -45,7 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/list_address"
-        android:layout_marginEnd="@dimen/span_5dp"
+        android:layout_marginTop="@dimen/span_5dp"
         android:text="@string/open_label"
         android:textColor="@color/open_text_color" />
 

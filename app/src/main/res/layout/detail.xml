@@ -21,11 +21,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/span_10dp">
+            android:layout_margin="@dimen/span_3dp">
 
             <ImageView
                 android:id="@+id/detail_photos"
                 android:layout_width="150dp"
+                android:scaleType="centerInside"
+                android:layout_marginStart="@dimen/span_3dp"
+                android:src="@drawable/image_placeholder"
                 android:layout_height="150dp" />
 
             <RatingBar
@@ -34,8 +37,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
+                android:layout_marginStart="@dimen/span_3dp"
                 android:layout_below="@id/detail_photos"
                 android:layout_marginVertical="@dimen/span_5dp"
+                android:theme="@style/ratingBar"
                 android:numStars="5"
                 android:rating="2" />
 
@@ -56,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/detail_name"
                 android:layout_marginStart="@dimen/span_10dp"
-                android:layout_marginTop="@dimen/span_20dp"
+                android:maxLines="4"
+                android:layout_marginTop="@dimen/span_10dp"
                 android:layout_toEndOf="@id/detail_photos"
                 tools:text="address" />
 
@@ -72,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/divider1"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/span_10dp"
+                android:layout_marginTop="@dimen/span_5dp"
                 android:text="@string/open_label"
                 android:textColor="@color/open_text_color"
                 android:textStyle="bold" />
@@ -94,42 +100,42 @@
 
                 <LinearLayout
                     android:id="@+id/call_layout"
-                    style="@style/grid_element_container_style">
+                    style="@style/grid_small_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
                         android:src="@drawable/call" />
 
                     <TextView
-                        style="@style/grid_element_title_style"
+                        style="@style/grid_small_element_title_style"
                         android:text="@string/call_label" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/map_layout"
-                    style="@style/grid_element_container_style">
+                    style="@style/grid_small_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
                         android:src="@drawable/map" />
 
                     <TextView
-                        style="@style/grid_element_title_style"
+                        style="@style/grid_small_element_title_style"
                         android:text="@string/map_label" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/web_layout"
-                    style="@style/grid_element_container_style">
+                    style="@style/grid_small_element_container_style">
 
                     <ImageView
                         style="@style/grid_element_image_style"
                         android:src="@drawable/web" />
 
                     <TextView
-                        style="@style/grid_element_title_style"
+                        style="@style/grid_small_element_title_style"
                         android:text="@string/web_label" />
 
                 </LinearLayout>
@@ -168,6 +174,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/detail_review_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginEnd="@dimen/span_20dp"

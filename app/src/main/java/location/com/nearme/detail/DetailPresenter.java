@@ -2,6 +2,7 @@ package location.com.nearme.detail;
 
 import android.support.annotation.VisibleForTesting;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 
 import location.com.nearme.IDInterface;
@@ -43,7 +44,8 @@ public class DetailPresenter implements DetailContract.Presenter {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void actionOnCallClick() {
-        if (isPhoneNumberValid(nearbyPlacesObject.getPhone_number())) {
+        String number = nearbyPlacesObject.getPhone_number();
+        if (StringUtils.isNotEmpty(number) && isPhoneNumberValid(number)) {
             view.actionIfValidPhoneNumber(nearbyPlacesObject.getPhone_number());
         } else {
             view.showErrorOnInvalidPhoneNumber();
@@ -52,7 +54,8 @@ public class DetailPresenter implements DetailContract.Presenter {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void actionOnWebClick() {
-        if (isUrlValid(nearbyPlacesObject.getWebsite())) {
+        String url = nearbyPlacesObject.getWebsite();
+        if (StringUtils.isNotEmpty(url) && isUrlValid(url)) {
             view.actionIfValidWebAddress(nearbyPlacesObject.getWebsite());
         } else {
             view.showErrorOnInvalidWebAddress();
@@ -61,7 +64,8 @@ public class DetailPresenter implements DetailContract.Presenter {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void actionOnMapClick() {
-        if (isUrlValid(nearbyPlacesObject.getUrl())) {
+        String url = nearbyPlacesObject.getUrl();
+        if (StringUtils.isNotEmpty(url) && isUrlValid(url)) {
             view.actionIfValidMapUrl(nearbyPlacesObject.getUrl());
         } else {
             view.showErrorOnInvalidMapUrl();

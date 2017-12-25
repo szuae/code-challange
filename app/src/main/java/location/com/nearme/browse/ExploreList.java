@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -25,7 +27,6 @@ import location.com.nearme.NearMe;
 import location.com.nearme.NearMeApplication;
 import location.com.nearme.R;
 import location.com.nearme.model.NearbyPlacesObject;
-import location.com.nearme.repository.ImageLoader;
 
 public class ExploreList extends BaseFragment implements ListContract.View {
 
@@ -52,7 +53,6 @@ public class ExploreList extends BaseFragment implements ListContract.View {
     ListContract.Presenter presenter;
 
 
-
     ApplicationConstant.SEARCH_OPTIONS searchType;
     String location;
 
@@ -70,7 +70,11 @@ public class ExploreList extends BaseFragment implements ListContract.View {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((NearMeApplication) getActivity().getApplication()).getComponent().inject(this);
-
+        searchType = (ApplicationConstant.SEARCH_OPTIONS) getArguments().getSerializable(SEARCH_OPTION_KEY);
+        location = (String) getArguments().getSerializable(LOCATION_KEY);
+        Log.e("saify", "onCreateView:: explorelist");
+        showProgressBar();
+        presenter.loadData(location, searchType);
     }
 
     @Nullable
@@ -78,11 +82,9 @@ public class ExploreList extends BaseFragment implements ListContract.View {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setRootView(container);
         view = inflater.inflate(R.layout.list_layout, container, false);
-        searchType = (ApplicationConstant.SEARCH_OPTIONS) getArguments().getSerializable(SEARCH_OPTION_KEY);
-        location = (String) getArguments().getSerializable(LOCATION_KEY);
         unbinder = ButterKnife.bind(this, view);
-        presenter.setView(this);
         initView();
+        presenter.setView(this);
         return view;
     }
 
@@ -117,7 +119,7 @@ public class ExploreList extends BaseFragment implements ListContract.View {
                 collapsingToolbarLayout.setTitle(getResources().getString(R.string.pharmacy_label));
                 break;
             case RESTURANT:
-                headerImage.setImageResource(R.drawable.resturant);
+                headerImage.setImageResource(R.drawable.resturant_img);
                 collapsingToolbarLayout.setTitle(getResources().getString(R.string.resturant_label));
                 break;
             case SHOPPING:
@@ -129,14 +131,14 @@ public class ExploreList extends BaseFragment implements ListContract.View {
 
     private void initView() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        displayHomeUp();
         setHeaderImageAndTitle();
 
-//        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
-//        listView.setLayoutManager(mLayoutManager);
-//        if(listAdapter == null)
-//            listAdapter = new ListAdapter(getContext(), this);
-//        listView.setAdapter(listAdapter);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
+        listView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        listView.setLayoutManager(mLayoutManager);
+        if (listAdapter == null)
+            listAdapter = new ListAdapter(getContext(), this);
+        listView.setAdapter(listAdapter);
     }
 
 
@@ -152,8 +154,8 @@ public class ExploreList extends BaseFragment implements ListContract.View {
 
 
     @Override
-    public void onSucess(ArrayList<NearbyPlacesObject> list) {
-        listAdapter.setData(list);
+    public void onSucess(NearbyPlacesObject object) {
+        listAdapter.setData(object);
         listAdapter.notifyDataSetChanged();
     }
 
@@ -165,12 +167,18 @@ public class ExploreList extends BaseFragment implements ListContract.View {
     }
 
     @Override
-    public void onFailure() {
-        Toast.makeText(getContext(), getResources().getString(R.string.connection_issue_msg), Toast.LENGTH_LONG).show();
+    public void onFailure(int errorMessageId) {
+        Toast.makeText(getContext(), getResources().getString(errorMessageId), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onItemClicked(NearbyPlacesObject object) {
         ((NearMe) getActivity()).goToDetailScreen(object);
+    }
+
+    @Override
+    public void onFinishLoading() {
+        Log.e("saify", "onFinishLoading called...");
+        hideProgressBar();
     }
 }

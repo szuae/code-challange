@@ -22,11 +22,11 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.viewHolder
 
     List<NearbyPlacesDetailResponseDTO.Result.Reviews> data = new ArrayList<NearbyPlacesDetailResponseDTO.Result.Reviews>();
     Context context;
-    ListContract.View fragmentView;
+    DetailContract.View fragmentView;
     private Unbinder unbinder;
 
 
-    public ReviewAdapter(Context context, ListContract.View view) {
+    public ReviewAdapter(Context context, DetailContract.View view) {
         this.context = context;
         this.fragmentView = view;
     }
@@ -75,19 +75,18 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.viewHolder
 
         public viewHolder(View itemView) {
             super(itemView);
-
+            ButterKnife.bind(this, itemView);
         }
     }
 
     @Override
     public void onViewAttachedToWindow(viewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        unbinder = ButterKnife.bind(this, holder.itemView);
     }
 
     @Override
     public void onViewDetachedFromWindow(viewHolder holder) {
         super.onViewDetachedFromWindow(holder);
-        unbinder.unbind();
+//        unbinder.unbind();
     }
 }

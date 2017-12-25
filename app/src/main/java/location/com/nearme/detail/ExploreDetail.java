@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -58,6 +64,9 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
     @BindView(R.id.deatil_toolbar_id)
     Toolbar toolbar;
 
+    @BindView(R.id.detail_review_list)
+    RecyclerView listView;
+
     NearbyPlacesObject nearbyPlacesObject;
 
     ReviewAdapter reviewAdapter;
@@ -77,7 +86,10 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
         ((NearMeApplication) getActivity().getApplication()).getComponent().inject(this);
         view = inflater.inflate(R.layout.detail, container, false);
         nearbyPlacesObject = (NearbyPlacesObject) getArguments().getSerializable(SELECTED_ITEM);
+        presenter.setData(nearbyPlacesObject);
         unbinder = ButterKnife.bind(this, view);
+        presenter.setView(this);
+        updateUI();
         return view;
     }
 
@@ -85,14 +97,12 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        presenter.setView(this);
-        updateUI();
     }
 
     private void updateUI() {
         name.setText(nearbyPlacesObject.getName());
         address.setText(nearbyPlacesObject.getAddress());
-        ratingBar.setRating(nearbyPlacesObject.getRating());
+        ratingBar.setRating((float) nearbyPlacesObject.getRating());
         if (nearbyPlacesObject.isOpen_now()) {
             workingStatus.setText(getResources().getString(R.string.open_label));
             workingStatus.setTextColor(getResources().getColor(R.color.open_text_color));
@@ -101,10 +111,21 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
             workingStatus.setTextColor(getResources().getColor(R.color.colorPrimary));
         }
 
-        imageLoader.loadImage(photo, getContext(),
-                nearbyPlacesObject.getPhotos()[0].getPhoto_reference(),
-                photo.getHeight(), photo.getWidth());
+        if (ArrayUtils.isNotEmpty(nearbyPlacesObject.getPhotos())) {
+            imageLoader.loadImage(photo, getContext(),
+                    nearbyPlacesObject.getPhotos()[0].getPhoto_reference(),
+                    photo.getHeight(), photo.getWidth());
+        }
+        else {
+            photo.setImageResource(R.drawable.image_placeholder);
+        }
+        if (reviewAdapter == null)
+            reviewAdapter = new ReviewAdapter(getContext(), this);
         reviewAdapter.setData(Arrays.asList(nearbyPlacesObject.getReviews()));
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
+        listView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
+        listView.setLayoutManager(mLayoutManager);
+        listView.setAdapter(reviewAdapter);
         reviewAdapter.notifyDataSetChanged();
     }
 

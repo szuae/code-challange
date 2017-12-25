@@ -53,9 +53,12 @@ public class NearMe extends AppCompatActivity implements GoogleApiClient.Connect
         goToLandingScreen();
 
         imageLoader.initImageViewer(getApplicationContext());
-        //image viewer
-//
-
+//        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
+//                .setProgressiveJpegConfig(new SimpleProgressiveJpegConfig())
+//                .setResizeAndRotateEnabledForNetwork(true)
+//                .setDownsampleEnabled(true)
+//                .build();
+//        Fresco.initialize(this, config);
     }
 
     public Location getMyLocation() {

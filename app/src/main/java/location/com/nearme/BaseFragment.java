@@ -58,7 +58,7 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    public void displayHomeUp() {
+    private void displayHomeUp() {
         boolean canback = getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0;
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
         getActivity().getSupportFragmentManager()
@@ -69,6 +69,12 @@ public class BaseFragment extends Fragment {
                     }
                 });
 
+    }
+
+    @Override
+    public void onAttachFragment(Fragment childFragment) {
+        super.onAttachFragment(childFragment);
+        displayHomeUp();
     }
 
     @Override

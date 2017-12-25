@@ -8,6 +8,8 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -51,6 +53,9 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
     @BindView(R.id.landing_location)
     EditText locationInput;
 
+    @BindView(R.id.toolbar_id)
+    Toolbar toolbar;
+
     View view;
     String location;
     Location locationObj;
@@ -73,6 +78,8 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
 
 
     private void init() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         locationInput.setOnTouchListener(new View.OnTouchListener() {
             final int DRAWABLE_RIGHT = 2;
 
@@ -177,7 +184,6 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
     @Override
     public void openSearchListScreen(ApplicationConstant.SEARCH_OPTIONS searchOptionId) {
         if (location != null) {
-            applicationconfig.reset();
             ((NearMe) getActivity()).goToListScreen(searchOptionId, location);
         } else {
             new AlertMessage().show(getContext(),

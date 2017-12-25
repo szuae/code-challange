@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import location.com.nearme.repository.NearbyPlacesDetailResponseDTO;
 
-public class NearbyPlacesObject implements Serializable {
+public class NearbyPlacesObject  implements Serializable {
     String id;
     String place_id;
     String reference;
@@ -14,12 +14,14 @@ public class NearbyPlacesObject implements Serializable {
     String name;
     String website;
     String url;
-    float rating;
+    double rating;
     double lat;
     double lng;
     boolean open_now;
     NearbyPlacesDetailResponseDTO.Result.Photos[] photos;
     NearbyPlacesDetailResponseDTO.Result.Reviews[] reviews;
+    String ErrorCode;
+    String ErrorMessage;
 
     private NearbyPlacesObject(Builder builder) {
         id = builder.id;
@@ -36,7 +38,10 @@ public class NearbyPlacesObject implements Serializable {
         open_now = builder.open_now;
         photos = builder.photos;
         reviews = builder.reviews;
+        ErrorCode = builder.ErrorCode;
+        ErrorMessage = builder.ErrorMessage;
     }
+
 
     public String getId() {
         return id;
@@ -70,7 +75,7 @@ public class NearbyPlacesObject implements Serializable {
         return url;
     }
 
-    public float getRating() {
+    public double getRating() {
         return rating;
     }
 
@@ -94,6 +99,14 @@ public class NearbyPlacesObject implements Serializable {
         return reviews;
     }
 
+    public String getErrorCode() {
+        return ErrorCode;
+    }
+
+    public String getErrorMessage() {
+        return ErrorMessage;
+    }
+
     public static final class Builder {
         private String id;
         private String place_id;
@@ -103,12 +116,14 @@ public class NearbyPlacesObject implements Serializable {
         private String name;
         private String website;
         private String url;
-        private float rating;
+        private double rating;
         private double lat;
         private double lng;
         private boolean open_now;
         private NearbyPlacesDetailResponseDTO.Result.Photos[] photos;
         private NearbyPlacesDetailResponseDTO.Result.Reviews[] reviews;
+        private String ErrorCode;
+        private String ErrorMessage;
 
         public Builder() {
         }
@@ -153,7 +168,7 @@ public class NearbyPlacesObject implements Serializable {
             return this;
         }
 
-        public Builder rating(float val) {
+        public Builder rating(double val) {
             rating = val;
             return this;
         }
@@ -180,6 +195,16 @@ public class NearbyPlacesObject implements Serializable {
 
         public Builder reviews(NearbyPlacesDetailResponseDTO.Result.Reviews[] val) {
             reviews = val;
+            return this;
+        }
+
+        public Builder ErrorCode(String val) {
+            ErrorCode = val;
+            return this;
+        }
+
+        public Builder ErrorMessage(String val) {
+            ErrorMessage = val;
             return this;
         }
 

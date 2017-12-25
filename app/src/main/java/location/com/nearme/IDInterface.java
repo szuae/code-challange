@@ -20,4 +20,10 @@ public interface IDInterface {
         int webId = R.id.web_layout;
         int mapId = R.id.map_layout;
     }
+
+    public interface ErrorIds{
+        int generic = R.string.connection_issue_msg;
+        int noResult = R.string.no_result_msg;
+        int limitReached = R.string.limit_reached_msg;
+    }
 }

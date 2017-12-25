@@ -8,6 +8,8 @@
     <color name="cardBackground">#ffffff</color>
     <color name="subtitle_text_color">#FF8040</color>
     <color name="open_text_color">#449744</color>
-    <color name="divider_color">#818c9e</color>
+    <color name="divider_color">#CDD1D8</color>
     <color name="title_color">#0000FF</color>
+    <color name="rating_color">#53E6FF</color>
+    <color name="review_color">#B3B9C4</color>
 </resources>

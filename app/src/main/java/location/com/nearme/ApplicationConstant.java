@@ -8,6 +8,7 @@ public interface ApplicationConstant {
         public String LIMIT_REACHED = "OVER_QUERY_LIMIT";
         public String KEY_INVALID = "REQUEST_DENIED";
         public String REQUEST_INVALID = "INVALID_REQUEST";
+        public String GENERIC_ERROR = "GENERIC_ERROR";
     }
 
     public static enum SEARCH_OPTIONS {
