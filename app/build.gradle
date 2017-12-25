@@ -53,11 +53,13 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BaseURL", '"https://maps.googleapis.com/maps/api/place/"'
+//            buildConfigField "String", "secret_key", '"AIzaSyAakVQKuYhh_vL9GOj6Tzy27sQTBs6EpxI"'
             buildConfigField "String", "secret_key", '"AIzaSyCaIcADhhb5RNJ0dxfiPjI7y_ViQ_ll9WY"'
         }
         debug {
             minifyEnabled false
             buildConfigField "String", "BaseURL", '"https://maps.googleapis.com/maps/api/place/"'
+//            buildConfigField "String", "secret_key", '"AIzaSyAakVQKuYhh_vL9GOj6Tzy27sQTBs6EpxI"'
             buildConfigField "String", "secret_key", '"AIzaSyCaIcADhhb5RNJ0dxfiPjI7y_ViQ_ll9WY"'
         }
         coverage {
@@ -110,8 +112,9 @@ dependencies {
     compile "com.android.support:design:$SUPPORT_VERSION"
     compile "com.jakewharton:butterknife:$BUTTERKNIFE_VERSION"
     compile group: 'commons-validator', name: 'commons-validator', version: '1.4.0'
-    compile 'com.github.bumptech.glide:glide:3.8.0'
     compile 'com.facebook.fresco:fresco:1.7.1'
+    compile 'com.github.stfalcon:frescoimageviewer:0.5.0'
+
 
 
     testImplementation "org.mockito:mockito-core:$MOCKITO_VERSION"

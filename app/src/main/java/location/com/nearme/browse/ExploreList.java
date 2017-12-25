@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -72,8 +71,6 @@ public class ExploreList extends BaseFragment implements ListContract.View {
         ((NearMeApplication) getActivity().getApplication()).getComponent().inject(this);
         searchType = (ApplicationConstant.SEARCH_OPTIONS) getArguments().getSerializable(SEARCH_OPTION_KEY);
         location = (String) getArguments().getSerializable(LOCATION_KEY);
-        Log.e("saify", "onCreateView:: explorelist");
-        showProgressBar();
         presenter.loadData(location, searchType);
     }
 
@@ -129,10 +126,20 @@ public class ExploreList extends BaseFragment implements ListContract.View {
         }
     }
 
-    private void initView() {
+    private void setupBackNavigation(){
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+    }
+    private void initView() {
         setHeaderImageAndTitle();
-
+        setupBackNavigation();
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 1);
         listView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         listView.setLayoutManager(mLayoutManager);
@@ -168,7 +175,7 @@ public class ExploreList extends BaseFragment implements ListContract.View {
 
     @Override
     public void onFailure(int errorMessageId) {
-        Toast.makeText(getContext(), getResources().getString(errorMessageId), Toast.LENGTH_LONG).show();
+       showMessage(getResources().getString(errorMessageId));
     }
 
     @Override
@@ -179,6 +186,5 @@ public class ExploreList extends BaseFragment implements ListContract.View {
     @Override
     public void onFinishLoading() {
         Log.e("saify", "onFinishLoading called...");
-        hideProgressBar();
     }
 }

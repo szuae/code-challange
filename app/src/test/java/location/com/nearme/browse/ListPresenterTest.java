@@ -2,40 +2,42 @@ package location.com.nearme.browse;
 
 import com.google.gson.Gson;
 
-import junit.framework.TestResult;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.OngoingStubbing;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.functions.Consumer;
-import io.reactivex.internal.observers.ConsumerSingleObserver;
-import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.TestSubscriber;
-import location.com.nearme.detail.DetailPresenter;
+import location.com.nearme.ApplicationConstant;
+import location.com.nearme.Applicationconfig;
+import location.com.nearme.IDInterface;
+import location.com.nearme.TestUtil;
 import location.com.nearme.model.NearbyPlacesObject;
 import location.com.nearme.repository.DataRepositoryImpl;
 import location.com.nearme.repository.DataRepositoryImplTest;
+import location.com.nearme.repository.NearbyPlacesDetailResponseDTO;
 import location.com.nearme.repository.NearbyPlacesResponseDTO;
-import location.com.nearme.service.FoursquareServices;
+import location.com.nearme.service.GooglePlaceServices;
 
-import static org.junit.Assert.*;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.GENERIC_ERROR;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.KEY_INVALID;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.LIMIT_REACHED;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.NO_RESULTS;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.REQUEST_INVALID;
+import static location.com.nearme.IDInterface.ErrorIds.generic;
+import static location.com.nearme.IDInterface.ErrorIds.limitReached;
+import static location.com.nearme.IDInterface.ErrorIds.noResult;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,7 +48,10 @@ public class ListPresenterTest {
     DataRepositoryImpl repository;
 
     @Mock
-    FoursquareServices services;
+    GooglePlaceServices services;
+
+    @Mock
+    Applicationconfig applicationconfig;
 
     ListPresenter presenter;
 
@@ -55,56 +60,79 @@ public class ListPresenterTest {
 
     @Before
     public void setup() {
-        repository = new DataRepositoryImpl(services, Schedulers.trampoline(), Schedulers.trampoline());
+        repository = new DataRepositoryImpl(services, Schedulers.trampoline(), Schedulers.trampoline(), applicationconfig);
         presenter = new ListPresenter(repository);
         presenter.setView(view);
 
     }
 
+
+    @Test
+    public void getErrorMessageTest() {
+        int errorMessageId = presenter.getErrorMessage(GENERIC_ERROR);
+        Assert.assertEquals(errorMessageId,generic);
+        Assert.assertNotEquals(errorMessageId,noResult);
+        Assert.assertNotEquals(errorMessageId,limitReached);
+
+        errorMessageId = presenter.getErrorMessage(REQUEST_INVALID);
+        Assert.assertEquals(errorMessageId,generic);
+        Assert.assertNotEquals(errorMessageId,noResult);
+        Assert.assertNotEquals(errorMessageId,limitReached);
+
+
+        errorMessageId = presenter.getErrorMessage(NO_RESULTS);
+        Assert.assertNotEquals(errorMessageId,generic);
+        Assert.assertEquals(errorMessageId,noResult);
+        Assert.assertNotEquals(errorMessageId,limitReached);
+
+        errorMessageId = presenter.getErrorMessage(KEY_INVALID);
+        Assert.assertNotEquals(errorMessageId,generic);
+        Assert.assertNotEquals(errorMessageId,noResult);
+        Assert.assertEquals(errorMessageId,limitReached);
+
+        errorMessageId = presenter.getErrorMessage(LIMIT_REACHED);
+        Assert.assertNotEquals(errorMessageId,generic);
+        Assert.assertNotEquals(errorMessageId,noResult);
+        Assert.assertEquals(errorMessageId,limitReached);
+    }
+
+
     @Test
     public void callMethodSucessTest() throws Exception {
-        String lat = "25.291957";
-        String lon = "55.365513";
+        String location = "25.291957,55.365513";
 
-        when(services.fetchNearByPlaces(any(LinkedHashMap.class)))
-                .thenReturn(io.reactivex.Observable.just(createNearbyPlacesDTOFromStub("success.json")));
-        presenter.call(lat,lon);
-        Observable< ArrayList<NearbyPlacesObject>> result = repository.fetchNearByPlaces(lat,lon);
+        when(services.placeDetails(any(LinkedHashMap.class)))
+                .thenReturn(Observable.just(TestUtil.createNearbyPlacesDetailDTOFromStub("place_detail.json")));
+
+        when(services.placeList(any(LinkedHashMap.class)))
+                .thenReturn(Single.just(TestUtil.createNearbyPlacesDTOFromStub("place_list.json")));
+
+
+        when(applicationconfig.getLanguage()).thenReturn(ApplicationConstant.LANGUAGE.English);
+
+        presenter.call(location, ApplicationConstant.SEARCH_OPTIONS.ATM);
+        Observable<NearbyPlacesObject> result = repository.loadData(location, ApplicationConstant.SEARCH_OPTIONS.ATM);
         result.test().assertNoErrors();
 
+        System.out.print("saifyddi:::"+ result.test().valueCount());
         verify(view, Mockito.times(1)).onSucess(result.test().values().get(0));
-        verify(view, Mockito.times(0)).onFailure();
+        verify(view, Mockito.times(0)).onFailure(0);
     }
 
+    //
+//    @Test
+//    public void callMethodFailureTest() {
+//        String lat = "25.291957";
+//        String lon = "55.365513";
+//
+//        when(services.placeList(any(LinkedHashMap.class)))
+//                .thenReturn(io.reactivex.Observable.just(createNearbyPlacesDTOFromStub("error.json")));
+//        presenter.call(lat,lon);
+//        Observable< ArrayList<NearbyPlacesObject>> result1 = repository.fetchNearByPlaces(lat,lon);
+//        result1.test().assertError(Exception.class);
+//        verify(view, Mockito.times(0)).onSucess(new NearbyPlacesObject.Builder().build());
+//        verify(view, Mockito.times(1)).onFailure(0);
+//    }
+//
 
-    @Test
-    public void callMethodFailureTest() {
-        String lat = "25.291957";
-        String lon = "55.365513";
-
-        when(services.fetchNearByPlaces(any(LinkedHashMap.class)))
-                .thenReturn(io.reactivex.Observable.just(createNearbyPlacesDTOFromStub("error.json")));
-        presenter.call(lat,lon);
-        Observable< ArrayList<NearbyPlacesObject>> result1 = repository.fetchNearByPlaces(lat,lon);
-        result1.test().assertError(Exception.class);
-        verify(view, Mockito.times(0)).onSucess(new ArrayList<NearbyPlacesObject>());
-        verify(view, Mockito.times(1)).onFailure();
-    }
-    private NearbyPlacesResponseDTO createNearbyPlacesDTOFromStub(String json) {
-        InputStream inputStream = null;
-        NearbyPlacesResponseDTO nearbyPlacesResponseDTO = null;
-        try {
-            inputStream = DataRepositoryImplTest.class.getClassLoader().getResourceAsStream(json);
-            nearbyPlacesResponseDTO =
-                    new Gson().fromJson(new InputStreamReader(inputStream), NearbyPlacesResponseDTO.class);
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException ex) {
-                }
-            }
-        }
-        return nearbyPlacesResponseDTO;
-    }
 }

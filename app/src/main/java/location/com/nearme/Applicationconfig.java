@@ -1,8 +1,10 @@
 package location.com.nearme;
 
+import static location.com.nearme.ApplicationConstant.LANGUAGE.English;
+
 public class Applicationconfig {
 
-    ApplicationConstant.LANGUAGE language = ApplicationConstant.LANGUAGE.English;
+    ApplicationConstant.LANGUAGE language = English;
 
 
     public ApplicationConstant.LANGUAGE getLanguage() {

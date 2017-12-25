@@ -15,7 +15,6 @@ public interface GooglePlaceServices {
 
     @GET ("nearbysearch/json")
     public Single<NearbyPlacesResponseDTO> placeList(@QueryMap LinkedHashMap<String, String> data);
-//    public Observable<NearbyPlacesResponseDTO> placeList(@QueryMap LinkedHashMap<String, String> data);
 
     @GET ("details/json")
     public Observable<NearbyPlacesDetailResponseDTO> placeDetails(@QueryMap LinkedHashMap<String, String> data);

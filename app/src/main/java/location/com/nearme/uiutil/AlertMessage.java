@@ -3,13 +3,11 @@ package location.com.nearme.uiutil;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Build;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AlertDialog;
 
 import location.com.nearme.ApplicationConstant;
 
-/**
- * Created by S430729 on 23/12/2017.
- */
 
 public class AlertMessage {
     public void show(Context context, String title,
@@ -27,7 +25,8 @@ public class AlertMessage {
         }
     }
 
-    private void showAlertWith2Buttons(Context context, String title, String msg, final AlertInterface alertInterface) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void showAlertWith2Buttons(Context context, String title, String msg, final AlertInterface alertInterface) {
         makeAlert(context, title, msg).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 alertInterface.onPositiveButtonClick();
@@ -39,7 +38,8 @@ public class AlertMessage {
         }).show();
     }
 
-    private void showAlertWith1Buttons(Context context, String title, String msg, final AlertInterface alertInterface) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void showAlertWith1Buttons(Context context, String title, String msg, final AlertInterface alertInterface) {
         makeAlert(context, title, msg).setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 alertInterface.onPositiveButtonClick();

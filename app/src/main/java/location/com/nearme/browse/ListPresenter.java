@@ -1,16 +1,21 @@
 package location.com.nearme.browse;
 
-import android.util.Log;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import location.com.nearme.ApplicationConstant;
-import location.com.nearme.IDInterface;
 import location.com.nearme.model.ErrorObject;
 import location.com.nearme.model.NearbyPlacesObject;
 import location.com.nearme.repository.DataRepository;
+
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.GENERIC_ERROR;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.KEY_INVALID;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.LIMIT_REACHED;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.NO_RESULTS;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.REQUEST_INVALID;
+import static location.com.nearme.IDInterface.ErrorIds.generic;
+import static location.com.nearme.IDInterface.ErrorIds.limitReached;
+import static location.com.nearme.IDInterface.ErrorIds.noResult;
 
 
 public class ListPresenter implements ListContract.Presenter {
@@ -28,7 +33,6 @@ public class ListPresenter implements ListContract.Presenter {
 
     public void call(String location, ApplicationConstant.SEARCH_OPTIONS option) {
         repo.loadData(location, option)
-                .observeOn(AndroidSchedulers.mainThread())
                 .doOnComplete(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -40,7 +44,6 @@ public class ListPresenter implements ListContract.Presenter {
                                public void accept(NearbyPlacesObject object) throws Exception {
                                    if (view != null)
                                        view.onSucess(object);
-                                   Log.e("saify", "called:::" + object.getWebsite());
                                }
                            }
                         , new Consumer<Throwable>() {
@@ -67,18 +70,18 @@ public class ListPresenter implements ListContract.Presenter {
 
     @Override
     public int getErrorMessage(String errorCode) {
-        int errorMessageId = IDInterface.ErrorIds.generic;
+        int errorMessageId = generic;
         switch (errorCode) {
-            case ApplicationConstant.ApiStatusCode.GENERIC_ERROR:
-            case ApplicationConstant.ApiStatusCode.REQUEST_INVALID:
-                errorMessageId = IDInterface.ErrorIds.generic;
+            case GENERIC_ERROR:
+            case REQUEST_INVALID:
+                errorMessageId = generic;
                 break;
-            case ApplicationConstant.ApiStatusCode.NO_RESULTS:
-                errorMessageId = IDInterface.ErrorIds.noResult;
+            case NO_RESULTS:
+                errorMessageId = noResult;
                 break;
-            case ApplicationConstant.ApiStatusCode.KEY_INVALID:
-            case ApplicationConstant.ApiStatusCode.LIMIT_REACHED:
-                errorMessageId = IDInterface.ErrorIds.limitReached;
+            case KEY_INVALID:
+            case LIMIT_REACHED:
+                errorMessageId = limitReached;
                 break;
         }
         return errorMessageId;

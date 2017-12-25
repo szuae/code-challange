@@ -26,6 +26,7 @@
     <string name="map_err_msg">Error Connecting to map! Please try later</string>
     <string name="welcome_msg">Welcome! Find near by locations</string>
     <string name="review_label">Review and Ratings</string>
+    <string name="more_label"> More</string>
     <string name="location_hint_with_location_service">Click button or enter Location</string>
     <string name="location_alert_title">Enable Location</string>
     <string name="location_alert_message">Would you like to enable location permission?</string>
@@ -34,6 +35,8 @@
     <string name="connection_issue_msg">Connection issue! please try after some time.</string>
     <string name="no_result_msg">No Result! Looks you are in remote location, change your location and search again</string>
     <string name="limit_reached_msg">Connection issue! We are constantly working to make your experience better</string>
+    <string name="no_internet_msg">Internet not connected! Please connect and try again</string>
+
 
 
 

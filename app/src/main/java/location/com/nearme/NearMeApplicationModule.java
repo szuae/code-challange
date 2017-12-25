@@ -16,8 +16,6 @@ import location.com.nearme.landing.LandingPresenter;
 import location.com.nearme.network.NetworkLayer;
 import location.com.nearme.repository.DataRepository;
 import location.com.nearme.repository.DataRepositoryImpl;
-import location.com.nearme.repository.ImageLoader;
-import location.com.nearme.repository.ImageLoaderImpl;
 import location.com.nearme.service.GooglePlaceServices;
 import location.com.nearme.util.LocationHelper;
 
@@ -48,14 +46,6 @@ public class NearMeApplicationModule {
     public LandingContract.Presenter provideLandingScreenPresenter() {
         return new LandingPresenter();
     }
-
-
-    @Provides
-    @Singleton
-    public ImageLoader provideImageLoader() {
-        return new ImageLoaderImpl();
-    }
-
 
     @Provides
     @Singleton

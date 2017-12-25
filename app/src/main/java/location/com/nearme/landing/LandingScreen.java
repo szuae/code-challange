@@ -38,6 +38,11 @@ import location.com.nearme.uiutil.AlertInterface;
 import location.com.nearme.uiutil.AlertMessage;
 import location.com.nearme.util.LocationHelper;
 
+import static location.com.nearme.ApplicationConstant.AlertButton.SingleButton;
+import static location.com.nearme.ApplicationConstant.AlertButton.TwoButtons;
+import static location.com.nearme.ApplicationConstant.LANGUAGE.Arabic;
+import static location.com.nearme.ApplicationConstant.LANGUAGE.English;
+
 public class LandingScreen extends BaseFragment implements LandingContract.View {
 
     @Inject
@@ -110,7 +115,7 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
             new AlertMessage().show(getContext(),
                     getResources().getString(R.string.location_alert_title),
                     getResources().getString(R.string.location_alert_message),
-                    ApplicationConstant.AlertButton.TwoButtons,
+                    TwoButtons,
                     new AlertInterface() {
                         @Override
                         public void onPositiveButtonClick() {
@@ -161,10 +166,10 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
 
         switch (item.getItemId()) {
             case R.id.lang_ar:
-                changeLanguage(getContext(), ApplicationConstant.LANGUAGE.Arabic);
+                changeLanguage(getContext(), Arabic);
                 break;
             case R.id.lang_en:
-                changeLanguage(getContext(), ApplicationConstant.LANGUAGE.English);
+                changeLanguage(getContext(), English);
                 break;
 
         }
@@ -172,24 +177,30 @@ public class LandingScreen extends BaseFragment implements LandingContract.View 
     }
 
     private void changeLanguage(Context context, ApplicationConstant.LANGUAGE language) {
-        Locale locale = new Locale(language.getValue());
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        context.getApplicationContext().getResources().updateConfiguration(config, null);
-        applicationconfig.setLanguage(language);
-        ((NearMe) getActivity()).refreshFragmentOnLanguageChange(getClass().getName());
+        if (applicationconfig.getLanguage() != language) {
+            Locale locale = new Locale(language.getValue());
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            context.getApplicationContext().getResources().updateConfiguration(config, null);
+            applicationconfig.setLanguage(language);
+            ((NearMe) getActivity()).refreshFragmentOnLanguageChange(getClass().getName());
+        }
     }
 
     @Override
     public void openSearchListScreen(ApplicationConstant.SEARCH_OPTIONS searchOptionId) {
+        if (!isNetworkAvailable()) {
+            showMessage(getResources().getString(R.string.no_internet_msg));
+            return;
+        }
         if (location != null) {
             ((NearMe) getActivity()).goToListScreen(searchOptionId, location);
         } else {
             new AlertMessage().show(getContext(),
                     getResources().getString(R.string.select_location_alert_title),
                     getResources().getString(R.string.select_location_alert_message),
-                    ApplicationConstant.AlertButton.SingleButton,
+                    SingleButton,
                     new AlertInterface() {
                         @Override
                         public void onPositiveButtonClick() {

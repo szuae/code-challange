@@ -19,6 +19,7 @@
     <string name="close_label">إغلاق الآن</string>
     <string name="menu_option_en">English</string>
     <string name="menu_option_ar">عربى</string>
+    <string name="more_label">أكثر من </string>
     <string name="phone_err_msg">حدث خطأ أثناء الاتصال برقم الهاتف! الرجاء المحاولة لاحقا</string>
     <string name="web_err_msg">حدث خطأ أثناء الاتصال بموقع الويب! الرجاء المحاولة لاحقا </string>
     <string name="map_err_msg">حدث خطأ أثناء الاتصال بالخريطة! الرجاء المحاولة لاحقا</string>
@@ -33,5 +34,5 @@
     <string name="select_location_alert_message">الرجاء تحديد الموقع للمتابعة ..</string>
     <string name="no_result_msg">لا نتيجة! يبدو أنك في مكان بعيد، تغيير موقعك والبحث مرة أخرى</string>
     <string name="limit_reached_msg">مشكلة الاتصال! نحن نعمل باستمرار لجعل تجربتك أفضل</string>
-
+    <string name="no_internet_msg">الإنترنت غير متصل! يرجى الاتصال والمحاولة مرة أخرى</string>
 </resources>

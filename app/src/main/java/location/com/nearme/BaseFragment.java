@@ -2,9 +2,8 @@ package location.com.nearme;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -28,6 +27,11 @@ public class BaseFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         connectivityUtil = new ConnectivityUtilImpl(getContext());
+    }
+
+    public void showMessage(String msg) {
+        Snackbar.make(getActivity().findViewById(android.R.id.content),
+                msg, Snackbar.LENGTH_LONG).show();
     }
 
     public boolean isNetworkAvailable() {
@@ -58,24 +62,6 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    private void displayHomeUp() {
-        boolean canback = getActivity().getSupportFragmentManager().getBackStackEntryCount() > 0;
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(canback);
-        getActivity().getSupportFragmentManager()
-                .addOnBackStackChangedListener(new OnBackStackChangedListener() {
-                    @Override
-                    public void onBackStackChanged() {
-                        getActivity().getSupportFragmentManager().popBackStack();
-                    }
-                });
-
-    }
-
-    @Override
-    public void onAttachFragment(Fragment childFragment) {
-        super.onAttachFragment(childFragment);
-        displayHomeUp();
-    }
 
     @Override
     public void onDetach() {

@@ -3,7 +3,25 @@ package location.com.nearme.landing;
 import android.support.annotation.VisibleForTesting;
 
 import location.com.nearme.ApplicationConstant;
-import location.com.nearme.IDInterface;
+
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.ATM;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.CAFE;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.FITNESS;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.GASOLINE;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.MOVIES;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.PARKING;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.PHARMACY;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.RESTURANT;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.SHOPPING;
+import static location.com.nearme.IDInterface.LandingPageIds.atmId;
+import static location.com.nearme.IDInterface.LandingPageIds.cafeId;
+import static location.com.nearme.IDInterface.LandingPageIds.fitnessId;
+import static location.com.nearme.IDInterface.LandingPageIds.gasId;
+import static location.com.nearme.IDInterface.LandingPageIds.mallId;
+import static location.com.nearme.IDInterface.LandingPageIds.movieId;
+import static location.com.nearme.IDInterface.LandingPageIds.parkingId;
+import static location.com.nearme.IDInterface.LandingPageIds.pharmacyId;
+import static location.com.nearme.IDInterface.LandingPageIds.resturantId;
 
 
 public class LandingPresenter implements LandingContract.Presenter {
@@ -14,31 +32,31 @@ public class LandingPresenter implements LandingContract.Presenter {
     @Override
     public void identifyOptionIdForSearch(int resourceId) {
         switch (resourceId) {
-            case IDInterface.LandingPageIds.atmId:
+            case atmId:
                 onATMClicked();
                 break;
-            case IDInterface.LandingPageIds.fitnessId:
+            case fitnessId:
                 onFitnessClicked();
                 break;
-            case IDInterface.LandingPageIds.cafeId:
+            case cafeId:
                 onCafeClicked();
                 break;
-            case IDInterface.LandingPageIds.gasId:
+            case gasId:
                 onGasClicked();
                 break;
-            case IDInterface.LandingPageIds.mallId:
+            case mallId:
                 onMallClicked();
                 break;
-            case IDInterface.LandingPageIds.movieId:
+            case movieId:
                 onMoviesClicked();
                 break;
-            case IDInterface.LandingPageIds.parkingId:
+            case parkingId:
                 onParkingClicked();
                 break;
-            case IDInterface.LandingPageIds.pharmacyId:
+            case pharmacyId:
                 onPharmacyClicked();
                 break;
-            case IDInterface.LandingPageIds.resturantId:
+            case resturantId:
                 onResturantClicked();
                 break;
         }
@@ -47,47 +65,47 @@ public class LandingPresenter implements LandingContract.Presenter {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onATMClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.ATM);
+        updateUI(ATM);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onCafeClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.CAFE);
+        updateUI(CAFE);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onFitnessClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.FITNESS);
+        updateUI(FITNESS);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onGasClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.GASOLINE);
+        updateUI(GASOLINE);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onMallClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.SHOPPING);
+        updateUI(SHOPPING);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onMoviesClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.MOVIES);
+        updateUI(MOVIES);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onParkingClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.PARKING);
+        updateUI(PARKING);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onPharmacyClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.PHARMACY);
+        updateUI(PHARMACY);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void onResturantClicked() {
-        updateUI(ApplicationConstant.SEARCH_OPTIONS.RESTURANT);
+        updateUI(RESTURANT);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

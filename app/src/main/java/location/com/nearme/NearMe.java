@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
@@ -20,7 +21,6 @@ import location.com.nearme.browse.ExploreList;
 import location.com.nearme.detail.ExploreDetail;
 import location.com.nearme.landing.LandingScreen;
 import location.com.nearme.model.NearbyPlacesObject;
-import location.com.nearme.repository.ImageLoader;
 import location.com.nearme.util.LocationHelper;
 
 public class NearMe extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
@@ -29,9 +29,6 @@ public class NearMe extends AppCompatActivity implements GoogleApiClient.Connect
 
     @Inject
     LocationHelper locationHelper;
-
-    @Inject
-    ImageLoader imageLoader;
 
     private Location lastLocation;
 
@@ -52,13 +49,7 @@ public class NearMe extends AppCompatActivity implements GoogleApiClient.Connect
 
         goToLandingScreen();
 
-        imageLoader.initImageViewer(getApplicationContext());
-//        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(this)
-//                .setProgressiveJpegConfig(new SimpleProgressiveJpegConfig())
-//                .setResizeAndRotateEnabledForNetwork(true)
-//                .setDownsampleEnabled(true)
-//                .build();
-//        Fresco.initialize(this, config);
+        Fresco.initialize(this);
     }
 
     public Location getMyLocation() {

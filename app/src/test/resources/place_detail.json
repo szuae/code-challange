@@ -1,0 +1,213 @@
+{
+  "html_attributions" : [],
+  "result" : {
+    "address_components" : [
+      {
+        "long_name" : "Sharjah",
+        "short_name" : "Sharjah",
+        "types" : [ "administrative_area_level_1", "political" ]
+      },
+      {
+        "long_name" : "Al Nahda",
+        "short_name" : "Al Nahda",
+        "types" : [ "sublocality_level_1", "sublocality", "political" ]
+      },
+      {
+        "long_name" : "Sharjah",
+        "short_name" : "Sharjah",
+        "types" : [ "locality", "political" ]
+      },
+      {
+        "long_name" : "United Arab Emirates",
+        "short_name" : "AE",
+        "types" : [ "country", "political" ]
+      }
+    ],
+    "adr_address" : "Al Ittihad Road - \u003cspan class=\"region\"\u003eSharjah\u003c/span\u003e - \u003cspan class=\"country-name\"\u003eUnited Arab Emirates\u003c/span\u003e",
+    "formatted_address" : "Al Ittihad Road - Sharjah - United Arab Emirates",
+    "formatted_phone_number" : "800 300",
+    "geometry" : {
+      "location" : {
+        "lat" : 25.3035072,
+        "lng" : 55.3705147
+      },
+      "viewport" : {
+        "northeast" : {
+          "lat" : 25.30485618029151,
+          "lng" : 55.3718636802915
+        },
+        "southwest" : {
+          "lat" : 25.3021582197085,
+          "lng" : 55.3691657197085
+        }
+      }
+    },
+    "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/gas_station-71.png",
+    "id" : "447d0ab3c84b4bf56fb13aae7c49718bcfee35e1",
+    "international_phone_number" : "+971 800 300",
+    "name" : "Adnoc Service Station",
+    "opening_hours" : {
+      "open_now" : true,
+      "periods" : [
+        {
+          "open" : {
+            "day" : 0,
+            "time" : "0000"
+          }
+        }
+      ],
+      "weekday_text" : [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ]
+    },
+    "photos" : [
+      {
+        "height" : 2988,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/107387402321529199202/photos\"\u003eHussein Kefel\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRZAAAAMlgbgZpFl3NPuRKjFMbHlKyqIZjILBuxrVlTvEtP_qejLtuS08INSh01VaE4DLd0dImQzWyG_5otIFxTvScW7knUoA8MUd2wD2NoqFFFADZh46Pm29q48_iabn8Qk0TfEhAchP9aeWYrSgBocQtbhcuoGhRGkvBblvowa7qV28d1HWzNo3q20A",
+        "width" : 3984
+      },
+      {
+        "height" : 2988,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/107387402321529199202/photos\"\u003eHussein Kefel\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRZAAAAnSncb1sAmEGg3DOF-N5MLGDhRpoy090E8VqJlieEqdzb6_C2n0TNt_D3zBymLyT8vFOxVDzwYVWXTBzzD84v7Tn9UcEsKQadkh6nGeDtDrlXampyDBPILrePAMmacUTLEhDjTO2EJUcQOhZMDof_LlvxGhQHG-ijrr_B_5hW4CXY6kqTtYSPcg",
+        "width" : 5312
+      },
+      {
+        "height" : 1152,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/117842640338599176205/photos\"\u003eIbrahim Afaneh\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRaAAAAp_APIcAvADYJ2DL2C874TmbF7wNAqF7dZKoBtpkFdoBMQxUu_COg43BQK6RaWtXfVhYkDIh-MziYg3u8Wbqa16ojWFK2GAeSb138kL526C2BFiEAMCnRPyU3WEKPZOSqEhBB2P3ymflXT2Tv5q02ZRK5GhTVN9wVr7TS2yyja_mvYW4LJv3ZwQ",
+        "width" : 2048
+      },
+      {
+        "height" : 1080,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/107387402321529199202/photos\"\u003eHussein Kefel\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRZAAAAUPgPAN1fPSoCPG3D0g_bSI4szdk0Ve4BmENyXuk9ZeQffd0E9QzjOxskGSwLlWa4wGXGt59mns0ntjrL2TeOqAJTLVJkJbxUTfL60FfHj-ZwIaj93uW9mTf8LaMjr-3yEhAmgT59rh7wZnpFqBPeyAysGhSnSRywD9qeBjfgJukA0gKgDhaRjw",
+        "width" : 1920
+      },
+      {
+        "height" : 2988,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/107387402321529199202/photos\"\u003eHussein Kefel\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRZAAAA9r7QHlBSNEkgcl4lGEd_giz2PbOry-8NvTh2LrAAynUVn1l_LQmQeEm2C22tZcopBiKhN5cRO-iULO2-_-4MmSZESFVll2vSkS9nsd-S0OVYgAS8KOv6hYbjJT1zxSJuEhBPx3CR7erUDCtyiNwKNablGhSCAzI_s5oC8jVVc7nDBkICd1jPwQ",
+        "width" : 5312
+      },
+      {
+        "height" : 2988,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/107387402321529199202/photos\"\u003eHussein Kefel\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRZAAAAOcrkFwSRG24UB6iNFUVm2_heYmktJ5PobyLR2Qx875uxgk5qY9wdivpfZj7srgLLj3VsQKD1eX-AtbhFCs8qUZ89TxRgqj7mmQQfVh_xL71P9wv52J3cYmvpBfn34OlHEhCuCxSygpdY7R5Ky2GtrapiGhRF-pe5nZfg8I2I0AF6U_CYPPB5LQ",
+        "width" : 5312
+      },
+      {
+        "height" : 2336,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/113499222165565772746/photos\"\u003eSanih Iqbal\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRaAAAAOnjhBBsFvjv_BMmLOfC8MM_eLR_XKHzcnFjtnpwPvMjYXxqjDq9bL5ReTphraDbSyF00gkhx3OLP9MlkZn8vbXG1Y-0hW3PNgtW4um0HPMi2hcoBGoo0pNoviYfEHLVfEhD9VD8h-033tXbNCAOJt2dUGhQGGromldSNuadQUKz6Toa4tpBdkA",
+        "width" : 4160
+      },
+      {
+        "height" : 2988,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/107387402321529199202/photos\"\u003eHussein Kefel\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRZAAAAkhtDab1fVz7smsmgqEux93_WygTLJskzaEMHwqNq9OFwYMiq_LFWJkfB8rGX81RauqsQAj8d8FEQNARAlrqtoPrq8gbQ04kN5isfj75n5XZ9k1Tdk4m5rGjrFUpN4SSpEhDRKvx7kDT1EH5Z3Phq7tdEGhS4ghpsjHAYJ7S0yuOqE76xcRLkUQ",
+        "width" : 3984
+      },
+      {
+        "height" : 4032,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/110264505826042138376/photos\"\u003eGhassan Jandali\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRaAAAAX8UhjwsRLqzatxl4gMQ8EDzksFXqbbledo7_nzECwvAJm81FMBEDgsOHkf9tlVY_ohQYaHeOdzQmjuWS7JYLDg0leEQW2cSoMNQsSudgphcyaDcd_1AbD1DrDn3nafQ0EhBrXvgfdYOwrndgYYtbRsLjGhQH-FqcgxYQfzhFZ09Mrd4Y2g8Ofg",
+        "width" : 3024
+      },
+      {
+        "height" : 3024,
+        "html_attributions" : [
+          "\u003ca href=\"https://maps.google.com/maps/contrib/105655934521749662550/photos\"\u003esanoj satheesh\u003c/a\u003e"
+        ],
+        "photo_reference" : "CmRaAAAAyjDbc_Kd7HF52Dg42ZZmx4W6oJDeAobDxK-ki0dUdhqxL90Lvgws-Z_zSBPAfTfMNcRXsmQ82cTcnnJeuGB5mQnvhC4UpegSn4nI0oyvPJnwvYNUE6YgpdBNYLEKisA7EhBQPXnwmHQq8hsbaDjXf0EwGhQthLo51kSSjyii0bz7SvtZXEdH6w",
+        "width" : 4032
+      }
+    ],
+    "place_id" : "ChIJ-0BKkndcXz4Rzh5gmnj2rd8",
+    "rating" : 4.1,
+    "reference" : "CmRSAAAAPHh-a1NpLZqcCvJqEhMP3sRfoPeGQFYyAR4qVYH7LdNxNHuFBuSCZ5-ESq-je3JL4qYAFlCU5q5YaGZAU2facwgw7W10OfEEoQlVj3PkIpndL5hEMj1r69sWazQoTLI8EhDmPur8kmB1jKLgIbhvu1KmGhQ1sUyQ2KrE8rv4QhNcTFLD-gKazg",
+    "reviews" : [
+      {
+        "author_name" : "Jeff Paul Joseph",
+        "author_url" : "https://www.google.com/maps/contrib/111014832505383475127/reviews",
+        "language" : "en",
+        "profile_photo_url" : "https://lh3.googleusercontent.com/-SKj48hU14Oc/AAAAAAAAAAI/AAAAAAAANfQ/kGxM6IXo8a4/s128-c0x00000000-cc-rp-mo-ba3/photo.jpg",
+        "rating" : 4,
+        "relative_time_description" : "a month ago",
+        "text" : "Good service! Nitrogen Available! Need free WiFi and Apple Pay! Hate giving ATM Cards!",
+        "time" : 1511467813
+      },
+      {
+        "author_name" : "sahal komu",
+        "author_url" : "https://www.google.com/maps/contrib/106560150778327105149/reviews",
+        "language" : "en",
+        "profile_photo_url" : "https://lh5.googleusercontent.com/-d3Pdgv10-mQ/AAAAAAAAAAI/AAAAAAAAAAA/AFiYof0pgiIEixQyds35rj7DQfKb_rsibQ/s128-c0x00000000-cc-rp-mo/photo.jpg",
+        "rating" : 1,
+        "relative_time_description" : "a month ago",
+        "text" : "The rating is based on the car wash experiance and that too 3 times. Specially the vaccum bay staffs are very lazy and the quality of service is very poor. Every time after service, the interior will remain dusty and unclean. Dear ADNOC management, kindly take necessay steps for the same.",
+        "time" : 1510311034
+      },
+      {
+        "author_name" : "Abftt sdeefyicweee1,ccszzàaseer Mukhtar",
+        "author_url" : "https://www.google.com/maps/contrib/106127462925776459965/reviews",
+        "language" : "en",
+        "profile_photo_url" : "https://lh3.googleusercontent.com/-FeiwzDrL_6Y/AAAAAAAAAAI/AAAAAAAAAAA/AFiYof300BT29c1DG8H-QVDTHphy-et46A/s128-c0x00000000-cc-rp-mo-ba4/photo.jpg",
+        "rating" : 4,
+        "relative_time_description" : "a month ago",
+        "text" : "Good place. A store to provide u things to est on the go and other things as well",
+        "time" : 1509967079
+      },
+      {
+        "author_name" : "Selvam G",
+        "author_url" : "https://www.google.com/maps/contrib/107840886427607536624/reviews",
+        "language" : "en",
+        "profile_photo_url" : "https://lh4.googleusercontent.com/-ceV7jU-R09M/AAAAAAAAAAI/AAAAAAAAAAA/AFiYof198oYTiY7iD-kLKFFf8714jHoHCQ/s128-c0x00000000-cc-rp-mo/photo.jpg",
+        "rating" : 5,
+        "relative_time_description" : "2 weeks ago",
+        "text" : "Fuel and great place for food and drinks",
+        "time" : 1512711406
+      },
+      {
+        "author_name" : "Ruggedcat 86",
+        "author_url" : "https://www.google.com/maps/contrib/104395102169682434132/reviews",
+        "language" : "en",
+        "profile_photo_url" : "https://lh4.googleusercontent.com/-WJQCs0Jt2Fc/AAAAAAAAAAI/AAAAAAAAACM/MjneBAq7wFI/s128-c0x00000000-cc-rp-mo-ba4/photo.jpg",
+        "rating" : 5,
+        "relative_time_description" : "4 months ago",
+        "text" : "Excellent service for only 40 Dirhams and they are open 24 hours. ",
+        "time" : 1503349419
+      }
+    ],
+    "scope" : "GOOGLE",
+    "types" : [ "gas_station", "point_of_interest", "establishment" ],
+    "url" : "https://maps.google.com/?cid=16117809639275372238",
+    "utc_offset" : 240,
+    "vicinity" : "Al Ittihad Road"
+  },
+  "status" : "OK"
+}

@@ -1,12 +1,19 @@
 package location.com.nearme.detail;
 
 import android.support.annotation.VisibleForTesting;
+import android.util.Patterns;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.UrlValidator;
 
-import location.com.nearme.IDInterface;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import location.com.nearme.model.NearbyPlacesObject;
+
+import static location.com.nearme.IDInterface.DetailPageIds.callId;
+import static location.com.nearme.IDInterface.DetailPageIds.mapId;
+import static location.com.nearme.IDInterface.DetailPageIds.webId;
 
 public class DetailPresenter implements DetailContract.Presenter {
 
@@ -28,15 +35,15 @@ public class DetailPresenter implements DetailContract.Presenter {
     @Override
     public void invokeContactOption(int resourceId) {
         switch (resourceId) {
-            case IDInterface.DetailPageIds.callId:
+            case callId:
                 actionOnCallClick();
                 break;
 
-            case IDInterface.DetailPageIds.webId:
+            case webId:
                 actionOnWebClick();
                 break;
 
-            case IDInterface.DetailPageIds.mapId:
+            case mapId:
                 actionOnMapClick();
                 break;
         }
@@ -45,7 +52,7 @@ public class DetailPresenter implements DetailContract.Presenter {
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public void actionOnCallClick() {
         String number = nearbyPlacesObject.getPhone_number();
-        if (StringUtils.isNotEmpty(number) && isPhoneNumberValid(number)) {
+        if (StringUtils.isNotEmpty(number) && isPhoneNumberValid(number.trim())) {
             view.actionIfValidPhoneNumber(nearbyPlacesObject.getPhone_number());
         } else {
             view.showErrorOnInvalidPhoneNumber();
@@ -80,8 +87,11 @@ public class DetailPresenter implements DetailContract.Presenter {
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     public boolean isPhoneNumberValid(String number) {
-        String regex = "^[+0-9-\\(\\)\\s]*{6,14}$";
-        return number.matches(regex);
+        String regex = "^\\+?[0-9. ()-]{10,25}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(number);
+
+        return matcher.matches();
     }
 
 }

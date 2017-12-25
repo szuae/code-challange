@@ -12,4 +12,5 @@
     <color name="title_color">#0000FF</color>
     <color name="rating_color">#53E6FF</color>
     <color name="review_color">#B3B9C4</color>
+    <color name="image_background_color">#CCe0e0e0</color>
 </resources>

@@ -1,10 +1,8 @@
 package location.com.nearme.repository;
 
+import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +16,13 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import location.com.nearme.ApplicationConstant;
 import location.com.nearme.Applicationconfig;
-import location.com.nearme.BuildConfig;
 import location.com.nearme.model.ErrorObject;
 import location.com.nearme.model.NearbyPlacesObject;
 import location.com.nearme.service.GooglePlaceServices;
 import location.com.nearme.service.Util;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.GENERIC_ERROR;
+import static location.com.nearme.ApplicationConstant.ApiStatusCode.OK;
 
 public class DataRepositoryImpl implements DataRepository {
 
@@ -50,53 +43,35 @@ public class DataRepositoryImpl implements DataRepository {
         this.applicationconfig = applicationconfig;
     }
 
-    private NearbyPlacesObject requestEach(final String id, final ObservableEmitter<NearbyPlacesObject> emitter) {
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public Observable<NearbyPlacesObject> requestEach(final String id, final ObservableEmitter<NearbyPlacesObject> emitter) {
 
-        services.placeDetails(Util.prepareDetailAPIQueryParam(id,
+        NearbyPlacesObject placesObject = null;
+        return services.placeDetails(Util.prepareDetailAPIQueryParam(id,
                 applicationconfig.getLanguage()))
                 .map(new Function<NearbyPlacesDetailResponseDTO, NearbyPlacesObject>() {
                     @Override
                     public NearbyPlacesObject apply(NearbyPlacesDetailResponseDTO nearbyPlacesDetailResponseDTO) throws Exception {
-                        if (nearbyPlacesDetailResponseDTO.getStatus().equals(ApplicationConstant.ApiStatusCode.OK)) {
+                        if (nearbyPlacesDetailResponseDTO.getStatus().equals(OK)) {
                             return returnObject(nearbyPlacesDetailResponseDTO);
                         } else {
                             reportError(nearbyPlacesDetailResponseDTO.getStatus(), emitter);
                         }
                         return null;
                     }
-                })
-                .subscribe(new Consumer<NearbyPlacesObject>() {
-                               @Override
-                               public void accept(NearbyPlacesObject object) throws Exception {
-                                   Log.e("saify", "eac request:: accept:::" + index++);
-                                   if (object != null)
-                                       emitter.onNext(object);
-                               }
-                           }
-                        , new Consumer<Throwable>() {
-                            @Override
-                            public void accept(Throwable throwable) throws Exception {
-                                emitter.onError(new ErrorObject.Builder()
-                                        .errorCode(ApplicationConstant.ApiStatusCode.GENERIC_ERROR)
-                                        .build());
-                                Log.e("saify", "error:::" + throwable.getMessage() + "::::" + index);
-                            }
-                        }
-                );
-
-        return new NearbyPlacesObject.Builder().build();
+                });
     }
 
-    private void reportError(String status, ObservableEmitter<NearbyPlacesObject> emitter) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public void reportError(String status, ObservableEmitter<NearbyPlacesObject> emitter) {
         emitter.onError(new ErrorObject.Builder()
                 .errorCode(status)
                 .build());
     }
 
-    int index;
 
-    private NearbyPlacesObject returnObject(NearbyPlacesDetailResponseDTO dto) {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public NearbyPlacesObject returnObject(NearbyPlacesDetailResponseDTO dto) {
         NearbyPlacesDetailResponseDTO.Result.Coordinates.Location locationObject = null;
         NearbyPlacesDetailResponseDTO.Result.WorkingHours openingHours = null;
         try {
@@ -123,38 +98,27 @@ public class DataRepositoryImpl implements DataRepository {
                 .build();
     }
 
-    private Single<NearbyPlacesObject> requestAll(String location,
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    public Single<NearbyPlacesObject> requestAll(String location,
                                                   ApplicationConstant.SEARCH_OPTIONS option,
                                                   final ObservableEmitter<NearbyPlacesObject> emitter) {
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-
-                        Request request = chain.request();
-                        Response response = chain.proceed(request);
-                        Log.e("saify", "response:::" + response.body().string());
-                        return response;
-                    }
-                })
-                .build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.BaseURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(client)
-                .build();
-        GooglePlaceServices services1  =retrofit.create(GooglePlaceServices.class);
-        services1.placeList(Util.preparePlaceAPIQueryParam(location, option,
+        services.placeList(Util.preparePlaceAPIQueryParam(location, option,
                 applicationconfig.getLanguage()))
                 .subscribeOn(backgroundThread)
-                .subscribe(new Consumer<NearbyPlacesResponseDTO>() { //background thread
+                .subscribe(new Consumer<NearbyPlacesResponseDTO>() {
                                @Override
                                public void accept(NearbyPlacesResponseDTO nearbyPlacesResponseDTO) throws Exception {
-                                   if (nearbyPlacesResponseDTO.getStatus().equals(ApplicationConstant.ApiStatusCode.OK)) {
+                                   if (nearbyPlacesResponseDTO.getStatus().equals(OK)) {
                                        for (NearbyPlacesResponseDTO.Result result : nearbyPlacesResponseDTO.getResults()) {
-                                           emitter.onNext(requestEach(result.getPlace_id(), emitter));
+                                           requestEach(result.getPlace_id(), emitter)
+                                                   .subscribe(new Consumer<NearbyPlacesObject>() {
+                                                       @Override
+                                                       public void accept(NearbyPlacesObject object) throws Exception {
+                                                           emitter.onNext(object);
+                                                       }
+                                                   });
+
                                        }
                                        emitter.onComplete();
                                    } else {
@@ -166,23 +130,13 @@ public class DataRepositoryImpl implements DataRepository {
                             @Override
                             public void accept(Throwable throwable) throws Exception {
                                 emitter.onError(new ErrorObject.Builder()
-                                .errorCode(ApplicationConstant.ApiStatusCode.GENERIC_ERROR)
-                                .build());
+                                        .errorCode(GENERIC_ERROR)
+                                        .build());
                                 Log.e("saify", "error:::" + throwable.getMessage());
                             }
                         }
                 );
         return null;
-    }
-
-
-    private List<String> generatePlaceIdArray(NearbyPlacesResponseDTO nearbyPlacesResponseDTO) {
-
-        List<String> placeIds = new ArrayList<>();
-        for (NearbyPlacesResponseDTO.Result results : nearbyPlacesResponseDTO.getResults()) {
-            placeIds.add(results.getPlace_id());
-        }
-        return placeIds;
     }
 
     @Override
@@ -192,8 +146,6 @@ public class DataRepositoryImpl implements DataRepository {
             public void subscribe(ObservableEmitter<NearbyPlacesObject> emitter) throws Exception {
                 requestAll(location, option, emitter);
             }
-        });
-
-
+        }).observeOn(mainThread);
     }
 }

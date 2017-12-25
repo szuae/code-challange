@@ -10,6 +10,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import location.com.nearme.IDInterface;
 import location.com.nearme.model.NearbyPlacesObject;
 
+import static location.com.nearme.IDInterface.DetailPageIds.callId;
+import static location.com.nearme.IDInterface.DetailPageIds.mapId;
+import static location.com.nearme.IDInterface.DetailPageIds.webId;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -46,6 +49,12 @@ public class DetailPresenterTest {
     @Test
     public void validPhoneNumberTest() {
         String number = "+971554598927";
+        assertTrue(presenter.isPhoneNumberValid(number));
+
+         number = "+971 554598927";
+        assertTrue(presenter.isPhoneNumberValid(number));
+
+        number = "+971 55 4598927";
         assertTrue(presenter.isPhoneNumberValid(number));
 
         number = "abcd";
@@ -140,7 +149,7 @@ public class DetailPresenterTest {
     @Test
     public void invokeContactOptionTest() {
         presenter.setData(positiveObject);
-        presenter.invokeContactOption(IDInterface.DetailPageIds.callId);
+        presenter.invokeContactOption(callId);
         verify(presenter, Mockito.times(1)).actionOnCallClick();
         verify(presenter, Mockito.times(0)).actionOnMapClick();
         verify(presenter, Mockito.times(0)).actionOnWebClick();
@@ -149,7 +158,7 @@ public class DetailPresenterTest {
         Mockito.reset(presenter);
 
         presenter.setData(positiveObject);
-        presenter.invokeContactOption(IDInterface.DetailPageIds.mapId);
+        presenter.invokeContactOption(mapId);
         verify(presenter, Mockito.times(1)).actionOnMapClick();
         verify(presenter, Mockito.times(0)).actionOnWebClick();
         verify(presenter, Mockito.times(0)).actionOnCallClick();
@@ -158,7 +167,7 @@ public class DetailPresenterTest {
         Mockito.reset(presenter);
 
         presenter.setData(positiveObject);
-        presenter.invokeContactOption(IDInterface.DetailPageIds.webId);
+        presenter.invokeContactOption(webId);
         verify(presenter, Mockito.times(0)).actionOnMapClick();
         verify(presenter, Mockito.times(0)).actionOnMapClick();
         verify(presenter, Mockito.times(1)).actionOnWebClick();

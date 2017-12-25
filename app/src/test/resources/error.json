@@ -1,11 +1,4 @@
 {
-  "meta": {
-    "code": 400,
-    "errorType": "param_error",
-    "errorDetail": "Invalid categoryId 42d4b7104d754a06370d81259",
-    "requestId": "5a283705351e3d0a169f0e46"
-  },
-  "response": {
-
-  }
+  "html_attributions" : [],
+  "status" : "INVALID_REQUEST"
 }

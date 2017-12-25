@@ -23,6 +23,7 @@ public class NearbyPlacesObject  implements Serializable {
     String ErrorCode;
     String ErrorMessage;
 
+
     private NearbyPlacesObject(Builder builder) {
         id = builder.id;
         place_id = builder.place_id;
