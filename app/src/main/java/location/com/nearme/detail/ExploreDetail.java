@@ -1,9 +1,13 @@
 package location.com.nearme.detail;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
@@ -182,7 +186,15 @@ public class ExploreDetail extends BaseFragment implements DetailContract.View {
 
     @Override
     public void actionIfValidPhoneNumber(String number) {
-        startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number)));
+        int permissionCheck = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CALL_PHONE);
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    new String[]{Manifest.permission.CALL_PHONE},
+                    1);
+        } else {
+            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number)));
+        }
     }
 
 
