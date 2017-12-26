@@ -1,7 +1,5 @@
 package location.com.nearme.repository;
 
-import com.google.gson.Gson;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,15 +7,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.Single;
-import io.reactivex.observers.TestObserver;
 import io.reactivex.schedulers.Schedulers;
 import location.com.nearme.ApplicationConstant;
 import location.com.nearme.Applicationconfig;
@@ -30,8 +24,6 @@ import static location.com.nearme.ApplicationConstant.LANGUAGE.English;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -53,7 +45,6 @@ public class DataRepositoryImplTest {
     public void setup() {
         repository = Mockito.spy(
                 new DataRepositoryImpl(services, Schedulers.trampoline(), Schedulers.trampoline(), applicationconfig));
-
     }
 
 
@@ -113,80 +104,30 @@ public class DataRepositoryImplTest {
         when(services.placeDetails(any(LinkedHashMap.class)))
                 .thenReturn(Observable.just(detailDTO));
 
-//        when(services.placeList(any(LinkedHashMap.class)))
-//                .thenReturn(Single.just(dto));
-        doReturn(Single.just(dto)).when(services).placeList(any(LinkedHashMap.class));
+        when(services.placeList(any(LinkedHashMap.class)))
+                .thenReturn(Single.just(dto));
 
         when(applicationconfig.getLanguage()).thenReturn(English);
-        TestObserver<NearbyPlacesObject> result = repository.requestAll("", ApplicationConstant.SEARCH_OPTIONS.ATM, emitter).test(false);
-        result.assertNoErrors();
-        verify(repository, Mockito.times(1)).requestEach("", emitter);
+        repository.requestAll("", ApplicationConstant.SEARCH_OPTIONS.ATM, emitter);
+        NearbyPlacesObject actualObject = repository.returnObject(detailDTO);
+
+        verify(repository, Mockito.times(1)).requestEach(dto.getResults()[0].place_id, emitter);
+        verify(emitter, Mockito.times(1)).onNext(actualObject);
         verify(repository, Mockito.times(0)).reportError(dto.getStatus(), emitter);
     }
 
 
     @Test
-    public void requestAllFailureTest() {
-        NearbyPlacesDetailResponseDTO detailDTO = TestUtil.createNearbyPlacesDetailDTOFromStub("place_detail.json");
+    public void requestAllResponseFailureTest() {
 
         NearbyPlacesResponseDTO dto = TestUtil.createNearbyPlacesDTOFromStub("error.json");
-
-        when(services.placeDetails(any(LinkedHashMap.class)))
-                .thenReturn(Observable.just(detailDTO));
 
         when(services.placeList(any(LinkedHashMap.class)))
                 .thenReturn(just(dto));
 
         when(applicationconfig.getLanguage()).thenReturn(English);
-        TestObserver<NearbyPlacesObject> result = repository.requestAll("", ApplicationConstant.SEARCH_OPTIONS.ATM, emitter).test();
-        result.assertNoErrors();
+        repository.requestAll("", ApplicationConstant.SEARCH_OPTIONS.ATM, emitter);
         verify(repository, Mockito.times(0)).requestEach("", emitter);
         verify(repository, Mockito.times(1)).reportError(dto.getStatus(), emitter);
     }
-
-
-    //
-////    @Test
-////    public void fetchNearbyPlacesPositiveCase() {
-////
-////        String lat = "25.291957";
-////        String lon = "55.365513";
-////
-////        when(services.placeList(any(LinkedHashMap.class)))
-////                .thenReturn(io.reactivex.Observable.just(createNearbyPlacesDTOFromStub("success.json")));
-////        TestObserver<ArrayList<NearbyPlacesObject>> testObserver = repository.fetchNearByPlaces(lat, lon).test();
-////
-////        assertTrue(testObserver.values().size() > 0);
-////    }
-////
-////
-////    @Test
-////    public void fetchNearbyPlacesNagativeCase() {
-////        String lat = "";
-////        String lon = "";
-////        when(services.placeList(any(LinkedHashMap.class)))
-////                .thenReturn(io.reactivex.Observable.just(createNearbyPlacesDTOFromStub("error.json")));
-////        TestObserver<ArrayList<NearbyPlacesObject>> testObserver1 = repository.fetchNearByPlaces(lat, lon).test();
-////
-////        assertTrue(testObserver1.values().size() == 0);
-////
-////    }
-////
-////    @Test
-////    public void fetchNearbyPlacesWithPrePopulatedData() {
-////        String lat = "25.291957";
-////        String lon = "55.365513";
-////        repository.data = new ArrayList<NearbyPlacesObject>();
-////        NearbyPlacesObject nearbyPlacesObject = new NearbyPlacesObject.Builder().address("").build();
-////        repository.data.add(nearbyPlacesObject);
-////
-////        TestObserver<ArrayList<NearbyPlacesObject>> testObserver1 = repository.fetchNearByPlaces(lat, lon).test();
-////
-////        assertTrue(testObserver1.values().size() == 1);
-////
-////        verify(services, Mockito.times(0)).placeList(any(LinkedHashMap.class));
-////
-////    }
-//
-
 }

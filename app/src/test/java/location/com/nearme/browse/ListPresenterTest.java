@@ -22,6 +22,7 @@ import location.com.nearme.ApplicationConstant;
 import location.com.nearme.Applicationconfig;
 import location.com.nearme.IDInterface;
 import location.com.nearme.TestUtil;
+import location.com.nearme.model.ErrorObject;
 import location.com.nearme.model.NearbyPlacesObject;
 import location.com.nearme.repository.DataRepositoryImpl;
 import location.com.nearme.repository.DataRepositoryImplTest;
@@ -34,6 +35,7 @@ import static location.com.nearme.ApplicationConstant.ApiStatusCode.KEY_INVALID;
 import static location.com.nearme.ApplicationConstant.ApiStatusCode.LIMIT_REACHED;
 import static location.com.nearme.ApplicationConstant.ApiStatusCode.NO_RESULTS;
 import static location.com.nearme.ApplicationConstant.ApiStatusCode.REQUEST_INVALID;
+import static location.com.nearme.ApplicationConstant.SEARCH_OPTIONS.ATM;
 import static location.com.nearme.IDInterface.ErrorIds.generic;
 import static location.com.nearme.IDInterface.ErrorIds.limitReached;
 import static location.com.nearme.IDInterface.ErrorIds.noResult;
@@ -61,11 +63,17 @@ public class ListPresenterTest {
     @Before
     public void setup() {
         repository = new DataRepositoryImpl(services, Schedulers.trampoline(), Schedulers.trampoline(), applicationconfig);
-        presenter = new ListPresenter(repository);
+        presenter = Mockito.spy(new ListPresenter(repository));
         presenter.setView(view);
 
     }
 
+
+    @Test
+    public void loadDataTest() {
+        presenter.loadData("",ATM);
+        verify(presenter,Mockito.times(1)).call("",ATM);
+    }
 
     @Test
     public void getErrorMessageTest() {
@@ -110,29 +118,31 @@ public class ListPresenterTest {
 
         when(applicationconfig.getLanguage()).thenReturn(ApplicationConstant.LANGUAGE.English);
 
-        presenter.call(location, ApplicationConstant.SEARCH_OPTIONS.ATM);
-        Observable<NearbyPlacesObject> result = repository.loadData(location, ApplicationConstant.SEARCH_OPTIONS.ATM);
+        presenter.call(location, ATM);
+        Observable<NearbyPlacesObject> result = repository.loadData(location, ATM);
         result.test().assertNoErrors();
 
-        System.out.print("saifyddi:::"+ result.test().valueCount());
         verify(view, Mockito.times(1)).onSucess(result.test().values().get(0));
         verify(view, Mockito.times(0)).onFailure(0);
     }
 
-    //
-//    @Test
-//    public void callMethodFailureTest() {
-//        String lat = "25.291957";
-//        String lon = "55.365513";
-//
-//        when(services.placeList(any(LinkedHashMap.class)))
-//                .thenReturn(io.reactivex.Observable.just(createNearbyPlacesDTOFromStub("error.json")));
-//        presenter.call(lat,lon);
-//        Observable< ArrayList<NearbyPlacesObject>> result1 = repository.fetchNearByPlaces(lat,lon);
-//        result1.test().assertError(Exception.class);
-//        verify(view, Mockito.times(0)).onSucess(new NearbyPlacesObject.Builder().build());
-//        verify(view, Mockito.times(1)).onFailure(0);
-//    }
-//
 
+
+    @Test
+    public void callMethodFailureTest() throws Exception {
+        String location = "25.291957,55.365513";
+
+        when(services.placeList(any(LinkedHashMap.class)))
+                .thenReturn(Single.just(TestUtil.createNearbyPlacesDTOFromStub("error.json")));
+
+
+        when(applicationconfig.getLanguage()).thenReturn(ApplicationConstant.LANGUAGE.English);
+
+        presenter.call(location, ATM);
+        Observable<NearbyPlacesObject> result = repository.loadData(location, ATM);
+        result.test().assertError(ErrorObject.class);
+
+        verify(view, Mockito.times(0)).onSucess(new NearbyPlacesObject.Builder().build());
+        verify(view, Mockito.times(1)).onFailure(IDInterface.ErrorIds.generic);
+    }
 }

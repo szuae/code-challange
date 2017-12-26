@@ -3,14 +3,10 @@ package location.com.nearme.repository;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Scheduler;
-import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -99,9 +95,9 @@ public class DataRepositoryImpl implements DataRepository {
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-    public Single<NearbyPlacesObject> requestAll(String location,
-                                                  ApplicationConstant.SEARCH_OPTIONS option,
-                                                  final ObservableEmitter<NearbyPlacesObject> emitter) {
+    public void requestAll(String location,
+                           ApplicationConstant.SEARCH_OPTIONS option,
+                           final ObservableEmitter<NearbyPlacesObject> emitter) {
 
         services.placeList(Util.preparePlaceAPIQueryParam(location, option,
                 applicationconfig.getLanguage()))
@@ -115,6 +111,7 @@ public class DataRepositoryImpl implements DataRepository {
                                                    .subscribe(new Consumer<NearbyPlacesObject>() {
                                                        @Override
                                                        public void accept(NearbyPlacesObject object) throws Exception {
+                                                           if(object != null)
                                                            emitter.onNext(object);
                                                        }
                                                    });
@@ -136,7 +133,6 @@ public class DataRepositoryImpl implements DataRepository {
                             }
                         }
                 );
-        return null;
     }
 
     @Override
